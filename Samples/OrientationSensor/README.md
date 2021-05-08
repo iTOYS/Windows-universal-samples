@@ -1,4 +1,22 @@
-﻿<!---
+---
+page_type: sample
+languages:
+- csharp
+- cpp
+- cppcx
+products:
+- windows
+- windows-uwp
+urlFragment: OrientationSensor
+extendedZipContent:
+- path: SharedContent
+  target: SharedContent
+- path: LICENSE
+  target: LICENSE
+description: "Shows how to use the Windows.Devices.Sensors.OrientationSensor API."
+---
+
+<!---
   category: DevicesSensorsAndPower
   samplefwlink: http://go.microsoft.com/fwlink/p/?LinkId=620580
 --->
@@ -8,7 +26,9 @@
 Shows how to use the [Windows.Devices.Sensors.OrientationSensor](http://msdn.microsoft.com/library/windows/apps/br206371) API.
 
 > **Note:** This sample is part of a large collection of UWP feature samples. 
-> If you are unfamiliar with Git and GitHub, you can download the entire collection as a 
+> You can download this sample as a standalone ZIP file
+> [from docs.microsoft.com](https://docs.microsoft.com/samples/microsoft/windows-universal-samples/orientationsensor/),
+> or you can download the entire collection as a single
 > [ZIP file](https://github.com/Microsoft/Windows-universal-samples/archive/master.zip), but be 
 > sure to unzip everything to access shared dependencies. For more info on working with the ZIP file, 
 > the samples collection, and GitHub, see [Get the UWP samples from GitHub](https://aka.ms/ovu2uq). 
@@ -34,26 +54,26 @@ When you click the **Enable** button for the **Polling** option, the app will re
 
 Allows the user to simulate sensor accuracy and demonstrates usage of the calibration bar.
 
-Related topics
---------------
+## Related topics
 
-[Accelerometer sample](../Accelerometer)  
+### Reference
+
 [Windows.Devices.Sensors namespace](http://msdn.microsoft.com/library/windows/apps/br206408)  
 
-Operating system requirements
------------------------------
+### Related samples
 
-**Client:** Windows 10 build 14295
+* [Accelerometer sample](../Accelerometer)
+* [OrientationSensor sample](/archived/OrientationSensor/) for JavaScript (archived)
 
-**Server:** Windows Server 2016 Technical Preview
+## System requirements
 
-**Phone:** Windows 10 build 14295
+* Windows 10 build 14393
 
 Build the sample
 ----------------
 
 1. If you download the samples ZIP, be sure to unzip the entire archive, not just the folder with the sample you want to build. 
-2. Start Microsoft Visual Studio 2017 and select **File** \> **Open** \> **Project/Solution**.
+2. Start Microsoft Visual Studio and select **File** \> **Open** \> **Project/Solution**.
 3. Starting in the folder where you unzipped the samples, go to the Samples subfolder, then the subfolder for this specific sample, then the subfolder for your preferred language (C++, C#, or JavaScript). Double-click the Visual Studio Solution (.sln) file.
 4. Press Ctrl+Shift+B, or select **Build** \> **Build Solution**.
 

@@ -1,3 +1,19 @@
+---
+page_type: sample
+languages:
+- csharp
+products:
+- windows
+- windows-uwp
+urlFragment: SystemMediaTransportControls
+extendedZipContent:
+- path: SharedContent
+  target: SharedContent
+- path: LICENSE
+  target: LICENSE
+description: "Shows how to respond to system media events as well as providing the system with metadata about the content that is playing."
+---
+
 <!---
   category: AudioVideoAndCamera
   samplefwlink: http://go.microsoft.com/fwlink/p/?LinkId=619488
@@ -5,14 +21,14 @@
 
 # System media transport controls sample
 
-## Summary
-
 Shows how to use the APIs in the [Windows.Media](https://msdn.microsoft.com/library/windows/apps/windows.media.aspx) namespace to allow
 your app to respond to system media events as well as providing the system with
 metadata about the content that is playing. 
 
 > **Note:** This sample is part of a large collection of UWP feature samples. 
-> If you are unfamiliar with Git and GitHub, you can download the entire collection as a 
+> You can download this sample as a standalone ZIP file
+> [from docs.microsoft.com](https://docs.microsoft.com/samples/microsoft/windows-universal-samples/systemmediatransportcontrols/),
+> or you can download the entire collection as a single
 > [ZIP file](https://github.com/Microsoft/Windows-universal-samples/archive/master.zip), but be 
 > sure to unzip everything to access shared dependencies. For more info on working with the ZIP file, 
 > the samples collection, and GitHub, see [Get the UWP samples from GitHub](https://aka.ms/ovu2uq). 
@@ -66,29 +82,25 @@ user can still control the app, even if it isn't neccesarily on screen. In this
 event handler we take the appropriate action for the command, such as pausing
 our media and then updating the state back on the control.
 
-## JavaScript
+## Related topics
 
-The <video> and <audio> elements do not integrate with SMTC.
-The JavaScript sample shows how to connect SMTC events with the
-HTML media elements.
-
-Related topics
-----------------------------
+### Reference
 
 [SystemMediaTransportControls class](https://msdn.microsoft.com/library/windows/apps/windows.media.systemmediatransportcontrols.aspx)  
 
-System requirements
-----------------------------
+### Related samples
 
-**Client:** Windows 10 version 1607
+* [SystemMediaTransportControls sample](/archived/SystemMediaTransportControls/) for JavaScript (archived)
 
-**Phone:** Windows 10 version 1607
+## System requirements
+
+* Windows 10 build 14393 or higher
 
 Build the sample
 ----------------------------
 
 1. If you download the samples ZIP, be sure to unzip the entire archive, not just the folder with the sample you want to build. 
-2. Start Microsoft Visual Studio 2017 and select **File** \> **Open** \> **Project/Solution**.
+2. Start Microsoft Visual Studio and select **File** \> **Open** \> **Project/Solution**.
 3. Starting in the folder where you unzipped the samples, go to the Samples subfolder, then the subfolder for this specific sample, then the subfolder for your preferred language (C++, C#, or JavaScript). Double-click the Visual Studio Solution (.sln) file.
 4. Press Ctrl+Shift+B, or select **Build** \> **Build Solution**.
 

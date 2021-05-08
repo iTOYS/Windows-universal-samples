@@ -1,4 +1,22 @@
-﻿<!---
+---
+page_type: sample
+languages:
+- csharp
+- cpp
+- cppcx
+products:
+- windows
+- windows-uwp
+urlFragment: LampDevice
+extendedZipContent:
+- path: SharedContent
+  target: SharedContent
+- path: LICENSE
+  target: LICENSE
+description: "Shows how to use Lamp API to enable apps to use the camera flash independently of the capture device."
+---
+
+<!---
   category: DevicesSensorsAndPower 
   samplefwlink: http://go.microsoft.com/fwlink/p/?LinkId=620558
 --->
@@ -12,7 +30,9 @@ over the flash device and consumes less power and CPU
 resources because the overhead of running capture device is avoided.
 
 > **Note:** This sample is part of a large collection of UWP feature samples. 
-> If you are unfamiliar with Git and GitHub, you can download the entire collection as a 
+> You can download this sample as a standalone ZIP file
+> [from docs.microsoft.com](https://docs.microsoft.com/samples/microsoft/windows-universal-samples/lampdevice/),
+> or you can download the entire collection as a single
 > [ZIP file](https://github.com/Microsoft/Windows-universal-samples/archive/master.zip), but be 
 > sure to unzip everything to access shared dependencies. For more info on working with the ZIP file, 
 > the samples collection, and GitHub, see [Get the UWP samples from GitHub](https://aka.ms/ovu2uq). 
@@ -37,27 +57,29 @@ the default lamp device when page loads and provide a toggle to turn the lamp on
     1) When you choose "Register for AvailablityChanged Event" button, the app registers for the AvailablityChanged event
     2) When you choose "Unregister for AvailablityChanged Event", the app unregisters for the AvailablityChanged event.
 
-Related topics
---------------
+## Related topics
+
+### Reference
 
 [Windows.Media.Devices namespace](https://msdn.microsoft.com/library/windows/apps/windows.media.devices.aspx)
 
 Windows 8 and 8.1 method for turning on flash (requires starting a video recording session)
 [Windows.Media.Devices.VideoDeviceController.TorchControl](https://msdn.microsoft.com/library/windows/apps/windows.media.devices.videodevicecontroller.torchcontrol.aspx)
 
+### Related samples
 
-System requirements
------------------------------
-Independent Flash Device
-Client
-Windows 10
-Windows Phone 10
+* [LampDevice sample](/archived/LampDevice/) for JavaScript (archived)
+
+## System requirements
+
+* Windows 10
+* Independent flash device
 
 Build the sample
 ----------------
 
 1. If you download the samples ZIP, be sure to unzip the entire archive, not just the folder with the sample you want to build. 
-2. Start Microsoft Visual Studio 2017 and select **File** \> **Open** \> **Project/Solution**.
+2. Start Microsoft Visual Studio and select **File** \> **Open** \> **Project/Solution**.
 3. Starting in the folder where you unzipped the samples, go to the Samples subfolder, then the subfolder for this specific sample, then the subfolder for your preferred language (C++, C#, or JavaScript). Double-click the Visual Studio Solution (.sln) file.
 4. Press Ctrl+Shift+B, or select **Build** \> **Build Solution**.
 

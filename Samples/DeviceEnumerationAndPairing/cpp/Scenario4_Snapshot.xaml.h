@@ -12,13 +12,10 @@ namespace SDKTemplate
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     [Windows::Foundation::Metadata::WebHostHidden]
-    [Windows::UI::Xaml::Data::Bindable]
-    public ref class Scenario4 sealed
+    public ref class Scenario4_Snapshot sealed
     {
     public:
-        Scenario4();
-
-        property Windows::Foundation::Collections::IObservableVector<DeviceInformationDisplay^>^ ResultCollection;
+        Scenario4_Snapshot();
 
     protected:
         virtual void OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs^ e) override;
@@ -26,6 +23,7 @@ namespace SDKTemplate
     private:
         void FindButton_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 
-        SDKTemplate::MainPage^ rootPage;
+        MainPage^ rootPage = MainPage::Current;
+        Windows::Foundation::Collections::IObservableVector<DeviceInformationDisplay^>^ resultCollection = ref new Platform::Collections::Vector<DeviceInformationDisplay^>();
     };
 }

@@ -18,24 +18,17 @@ using Windows.UI.Xaml.Navigation;
 using Windows.Web.Http;
 using Windows.Web.Http.Filters;
 
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
-
 namespace SDKTemplate
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
-    public sealed partial class Scenario12 : Page, IDisposable
+    public sealed partial class Scenario12_DisableCookies : Page
     {
-        // A pointer back to the main page.  This is needed if you want to call methods in MainPage such
-        // as NotifyUser()
         MainPage rootPage = MainPage.Current;
 
         private HttpBaseProtocolFilter filter;
         private HttpClient httpClient;
         private CancellationTokenSource cts;
 
-        public Scenario12()
+        public Scenario12_DisableCookies()
         {
             this.InitializeComponent();
         }
@@ -49,22 +42,18 @@ namespace SDKTemplate
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            // If the navigation is external to the app do not clean up.
-            // This can occur on Phone when suspending the app.
-            if (e.NavigationMode == NavigationMode.Forward && e.Uri == null)
-            {
-                return;
-            }
-
-            Dispose();
+            cts.Cancel();
+            cts.Dispose();
+            httpClient.Dispose();
+            filter.Dispose();
         }
+
         private async void SendInitialGetButton_Click(object sender, RoutedEventArgs e)
         {
-            Uri resourceAddress;
-
             // The value of 'AddressField' is set by the user and is therefore untrusted input. If we can't create a
             // valid, absolute URI, we'll notify the user about the incorrect input.
-            if (!Helpers.TryGetUri(AddressField.Text, out resourceAddress))
+            Uri resourceUri = Helpers.TryParseHttpUri(AddressField.Text);
+            if (resourceUri == null)
             {
                 rootPage.NotifyUser("Invalid URI.", NotifyType.ErrorMessage);
                 return;
@@ -75,45 +64,47 @@ namespace SDKTemplate
 
             try
             {
-                HttpResponseMessage response = await httpClient.GetAsync(resourceAddress).AsTask(cts.Token);
-                HttpCookieCollection cookieCollection = filter.CookieManager.GetCookies(resourceAddress);
-                OutputField.Text = cookieCollection.Count + " cookies found.\r\n";
-                foreach (HttpCookie cookie in cookieCollection)
-                {
-                    OutputField.Text += "--------------------\r\n";
-                    OutputField.Text += "Name: " + cookie.Name + "\r\n";
-                    OutputField.Text += "Domain: " + cookie.Domain + "\r\n";
-                    OutputField.Text += "Path: " + cookie.Path + "\r\n";
-                    OutputField.Text += "Value: " + cookie.Value + "\r\n";
-                    OutputField.Text += "Expires: " + cookie.Expires + "\r\n";
-                    OutputField.Text += "Secure: " + cookie.Secure + "\r\n";
-                    OutputField.Text += "HttpOnly: " + cookie.HttpOnly + "\r\n";
-                }
+                HttpRequestResult result = await httpClient.TryGetAsync(resourceUri).AsTask(cts.Token);
 
-                rootPage.NotifyUser("Completed", NotifyType.StatusMessage);
-                SendNextRequestButton.IsEnabled = true;
+                if (result.Succeeded)
+                {
+                    HttpCookieCollection cookieCollection = filter.CookieManager.GetCookies(resourceUri);
+                    OutputField.Text = cookieCollection.Count + " cookies found.\r\n";
+                    foreach (HttpCookie cookie in cookieCollection)
+                    {
+                        OutputField.Text += "--------------------\r\n";
+                        OutputField.Text += "Name: " + cookie.Name + "\r\n";
+                        OutputField.Text += "Domain: " + cookie.Domain + "\r\n";
+                        OutputField.Text += "Path: " + cookie.Path + "\r\n";
+                        OutputField.Text += "Value: " + cookie.Value + "\r\n";
+                        OutputField.Text += "Expires: " + cookie.Expires + "\r\n";
+                        OutputField.Text += "Secure: " + cookie.Secure + "\r\n";
+                        OutputField.Text += "HttpOnly: " + cookie.HttpOnly + "\r\n";
+                    }
+
+                    rootPage.NotifyUser("Completed", NotifyType.StatusMessage);
+                    SendNextRequestButton.IsEnabled = true;
+                }
+                else
+                {
+                    Helpers.DisplayWebError(rootPage, result.ExtendedError);
+                }
             }
             catch (TaskCanceledException)
             {
                 rootPage.NotifyUser("Request canceled.", NotifyType.ErrorMessage);
             }
-            catch (Exception ex)
-            {
-                rootPage.NotifyUser("Error: " + ex.Message, NotifyType.ErrorMessage);
-            }
-            finally
-            {
-                Helpers.ScenarioCompleted(SendInitialGetButton, CancelButton);
-            }
+
+            Helpers.ScenarioCompleted(SendInitialGetButton, CancelButton);
         }
 
         private async void SendNextRequestButton_Click(object sender, RoutedEventArgs e)
         {
-            Uri resourceAddress;
+            Uri resourceUri = Helpers.TryParseHttpUri(AddressField.Text);
 
             // The value of 'AddressField' is set by the user and is therefore untrusted input. If we can't create a
             // valid, absolute URI, we'll notify the user about the incorrect input.
-            if (!Helpers.TryGetUri(AddressField.Text, out resourceAddress))
+            if (resourceUri == null)
             {
                 rootPage.NotifyUser("Invalid URI.", NotifyType.ErrorMessage);
                 return;
@@ -132,25 +123,29 @@ namespace SDKTemplate
                 filter.CookieUsageBehavior = HttpCookieUsageBehavior.NoCookies;
             }
 
+            // This sample uses a "try" in order to support TaskCanceledException.
+            // If you don't need to support cancellation, then the "try" is not needed.
             try
             {
-                HttpResponseMessage response = await httpClient.GetAsync(resourceAddress).AsTask(cts.Token);
-                await Helpers.DisplayTextResultAsync(response, OutputField, cts.Token);
+                HttpRequestResult result = await httpClient.TryGetAsync(resourceUri).AsTask(cts.Token);
 
-                rootPage.NotifyUser("Completed. Response came from " + response.Source.ToString() + ".", NotifyType.StatusMessage);
+                if (result.Succeeded)
+                {
+                    await Helpers.DisplayTextResultAsync(result.ResponseMessage, OutputField, cts.Token);
+
+                    rootPage.NotifyUser("Completed. Response came from " + result.ResponseMessage.Source.ToString() + ".", NotifyType.StatusMessage);
+                }
+                else
+                {
+                    Helpers.DisplayWebError(rootPage, result.ExtendedError);
+                }
             }
             catch (TaskCanceledException)
             {
                 rootPage.NotifyUser("Request canceled.", NotifyType.ErrorMessage);
             }
-            catch (Exception ex)
-            {
-                rootPage.NotifyUser("Error: " + ex.Message, NotifyType.ErrorMessage);
-            }
-            finally
-            {
-                Helpers.ScenarioCompleted(SendNextRequestButton, CancelButton);
-            }
+
+            Helpers.ScenarioCompleted(SendNextRequestButton, CancelButton);
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
@@ -164,23 +159,6 @@ namespace SDKTemplate
 
         public void Dispose()
         {
-            if (httpClient != null)
-            {
-                httpClient.Dispose();
-                httpClient = null;
-            }
-
-            if (cts != null)
-            {
-                cts.Dispose();
-                cts = null;
-            }
-
-            if(filter != null)
-            {
-                filter.Dispose();
-                filter = null;
-            }
         }
     }
 }

@@ -1,4 +1,23 @@
-﻿<!---
+---
+page_type: sample
+languages:
+- csharp
+- cpp
+- cppcx
+- cppwinrt
+products:
+- windows
+- windows-uwp
+urlFragment: FileAccess
+extendedZipContent:
+- path: SharedContent
+  target: SharedContent
+- path: LICENSE
+  target: LICENSE
+description: "Shows basic file operations, how to retrieve file properties, and how to track a file or folder so that your app can access it again."
+---
+
+<!---
   category: FilesFoldersAndLibraries
   samplefwlink: http://go.microsoft.com/fwlink/p/?LinkId=619995
 --->
@@ -11,7 +30,9 @@ This sample uses the [Windows.Storage](http://msdn.microsoft.com/library/windows
 [Windows.Storage.AccessCache](http://msdn.microsoft.com/library/windows/apps/br207498) APIs.
 
 > **Note:** This sample is part of a large collection of UWP feature samples. 
-> If you are unfamiliar with Git and GitHub, you can download the entire collection as a 
+> You can download this sample as a standalone ZIP file
+> [from docs.microsoft.com](https://docs.microsoft.com/samples/microsoft/windows-universal-samples/fileaccess/),
+> or you can download the entire collection as a single
 > [ZIP file](https://github.com/Microsoft/Windows-universal-samples/archive/master.zip), but be 
 > sure to unzip everything to access shared dependencies. For more info on working with the ZIP file, 
 > the samples collection, and GitHub, see [Get the UWP samples from GitHub](https://aka.ms/ovu2uq). 
@@ -71,7 +92,7 @@ The sample demonstrates these tasks:
 
     Uses the [StorageFolder](http://msdn.microsoft.com/library/windows/apps/br227230).[TryGetItemAsync](http://msdn.microsoft.com/library/windows/apps/dn251721) method to get a file without raising an exception.
 
-**Note** The Windows universal samples require Visual Studio 2017 to build and Windows 10 to execute.
+**Note** The Windows universal samples require Visual Studio to build and Windows 10 to execute.
  
 To obtain information about Windows 10 development, go to the [Windows Dev Center](http://go.microsoft.com/fwlink/?LinkID=532421)
 
@@ -81,17 +102,6 @@ To obtain information about Microsoft Visual Studio and the tools for developing
 
 *Note**  If you want to learn about accessing files using a file picker, see [Open files and folders with a picker](https://msdn.microsoft.com/library/windows/apps/mt186456).
 
-### Samples
-
-[File picker sample](http://go.microsoft.com/fwlink/p/?linkid=231464)  
-[Folder enumeration sample](http://go.microsoft.com/fwlink/p/?linkid=231512)  
-[Programmatic file search sample](http://go.microsoft.com/fwlink/p/?linkid=231532)  
-[File and folder thumbnail sample](http://go.microsoft.com/fwlink/p/?linkid=231522)  
-[RSS reader sample](https://github.com/Microsoft/Windows-appsample-rssreader)  
-[Family Notes sample](https://github.com/Microsoft/Windows-appsample-familynotes)  
-[Coloring Book app sample](https://github.com/Microsoft/Windows-appsample-coloringbook)  
-[Traffic App sample](https://github.com/microsoft/windows-appsample-trafficapp/)  
-
 ## Reference
 
 [Windows.Storage namespace](http://msdn.microsoft.com/library/windows/apps/br227346)  
@@ -99,18 +109,26 @@ To obtain information about Microsoft Visual Studio and the tools for developing
 [Windows.Storage.FileProperties](http://msdn.microsoft.com/library/windows/apps/br207831)  
 [Windows.Storage.Streams namespace](http://msdn.microsoft.com/library/windows/apps/br241791)  
 
+### Related samples
+
+* [File picker sample](http://go.microsoft.com/fwlink/p/?linkid=231464)
+* [Folder enumeration sample](http://go.microsoft.com/fwlink/p/?linkid=231512)
+* [Programmatic file search sample](http://go.microsoft.com/fwlink/p/?linkid=231532)
+* [File and folder thumbnail sample](http://go.microsoft.com/fwlink/p/?linkid=231522)
+* [RSS reader sample](https://github.com/Microsoft/Windows-appsample-rssreader)
+* [Family Notes sample](https://github.com/Microsoft/Windows-appsample-familynotes)
+* [Coloring Book app sample](https://github.com/Microsoft/Windows-appsample-coloringbook)
+* [Traffic App sample](https://github.com/microsoft/windows-appsample-trafficapp/)
+* [FileAccess sample](/archived/FileAccess/) for JavaScript (archived)
+
 ## System requirements
 
-**Client:** Windows 10 build 10500 or higher
-
-**Server:** Windows Server 2016 Technical Preview build 10500 or higher
-
-**Phone:** Windows 10 build 10500 or higher
+* Windows 10 build 10586 or higher
 
 ## Build the sample
 
 1. If you download the samples ZIP, be sure to unzip the entire archive, not just the folder with the sample you want to build. 
-2. Start Microsoft Visual Studio 2017 and select **File** \> **Open** \> **Project/Solution**.
+2. Start Microsoft Visual Studio and select **File** \> **Open** \> **Project/Solution**.
 3. Starting in the folder where you unzipped the samples, go to the Samples subfolder, then the subfolder for this specific sample, then the subfolder for your preferred language (C++, C#, or JavaScript). Double-click the Visual Studio Solution (.sln) file.
 4. Press Ctrl+Shift+B, or select **Build** \> **Build Solution**.
 

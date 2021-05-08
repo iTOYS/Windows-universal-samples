@@ -45,7 +45,6 @@ namespace SDKTemplate
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             ResetTheScenarioState();
-            base.OnNavigatedTo(e);
         }
 
         /// <summary>
@@ -56,7 +55,6 @@ namespace SDKTemplate
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             ResetTheScenarioState();
-            base.OnNavigatedFrom(e);
         }
 
         /// <summary>
@@ -80,20 +78,19 @@ namespace SDKTemplate
 
                 if (claimedScanner != null)
                 {
-                    // It is always a good idea to have a release device requested event handler. If this event is not handled, there are chances of another app can 
-                    // claim ownsership of the barcode scanner.
+                    // It is always a good idea to have a release device requested event handler. If this event is not handled, there are chances of another app can
+                    // claim ownership of the barcode scanner.
                     claimedScanner.ReleaseDeviceRequested += claimedScanner_ReleaseDeviceRequested;
 
                     // after successfully claiming, attach the datareceived event handler.
                     claimedScanner.DataReceived += claimedScanner_DataReceived;
 
-                    // Ask the API to decode the data by default. By setting this, API will decode the raw data from the barcode scanner and 
+                    // Ask the API to decode the data by default. By setting this, API will decode the raw data from the barcode scanner and
                     // send the ScanDataLabel and ScanDataType in the DataReceived event
                     claimedScanner.IsDecodeDataEnabled = true;
 
                     // enable the scanner.
-                    // Note: If the scanner is not enabled (i.e. EnableAsync not called), attaching the event handler will not be any useful because the API will not fire the event 
-                    // if the claimedScanner has not beed Enabled
+                    // The scanner must be enabled in order to receive the DataReceived event.
                     await claimedScanner.EnableAsync();
 
                     rootPage.NotifyUser("Ready to scan. Device ID: " + claimedScanner.DeviceId, NotifyType.StatusMessage);
@@ -117,19 +114,16 @@ namespace SDKTemplate
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"> Contains the ClamiedBarcodeScanner that is sending this request</param>
-        async void claimedScanner_ReleaseDeviceRequested(object sender, ClaimedBarcodeScanner e)
+        void claimedScanner_ReleaseDeviceRequested(object sender, ClaimedBarcodeScanner e)
         {
             // always retain the device
             e.RetainDevice();
 
-            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-            {
-                rootPage.NotifyUser("Event ReleaseDeviceRequested received. Retaining the barcode scanner.", NotifyType.StatusMessage);
-            });
+            rootPage.NotifyUser("Event ReleaseDeviceRequested received. Retaining the barcode scanner.", NotifyType.StatusMessage);
         }
 
         /// <summary>
-        /// Event handler for the DataReceived event fired when a barcode is scanned by the barcode scanner 
+        /// Event handler for the DataReceived event fired when a barcode is scanned by the barcode scanner
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"> Contains the BarcodeScannerReport which contains the data obtained in the scan</param>
@@ -167,19 +161,22 @@ namespace SDKTemplate
                 scanner = null;
             }
 
-            // Reset the strings in the UI
-            rootPage.NotifyUser("Click the start scanning button to begin.", NotifyType.StatusMessage);
-            this.ScenarioOutputScanData.Text = "No data";
-            this.ScenarioOutputScanDataLabel.Text = "No data";
-            this.ScenarioOutputScanDataType.Text = "No data";
+            // Reset the UI if we are still the current page.
+            if (Frame.Content == this)
+            {
+                rootPage.NotifyUser("Click the start scanning button to begin.", NotifyType.StatusMessage);
+                this.ScenarioOutputScanData.Text = "No data";
+                this.ScenarioOutputScanDataLabel.Text = "No data";
+                this.ScenarioOutputScanDataType.Text = "No data";
 
-            // reset the button state
-            ScenarioEndScanButton.IsEnabled = false;
-            ScenarioStartScanButton.IsEnabled = true;
+                // reset the button state
+                ScenarioEndScanButton.IsEnabled = false;
+                ScenarioStartScanButton.IsEnabled = true;
+            }
         }
 
         /// <summary>
-        /// Event handler for End Scan Button Click. 
+        /// Event handler for End Scan Button Click.
         /// Releases the Barcode Scanner and resets the text in the UI
         /// </summary>
         /// <param name="sender"></param>

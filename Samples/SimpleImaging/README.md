@@ -1,3 +1,19 @@
+---
+page_type: sample
+languages:
+- csharp
+products:
+- windows
+- windows-uwp
+urlFragment: SimpleImaging
+extendedZipContent:
+- path: SharedContent
+  target: SharedContent
+- path: LICENSE
+  target: LICENSE
+description: "Shows some common imaging scenarios for Universal Windows apps including metadata and editing/saving."
+---
+
 <!---
   category: AudioVideoAndCamera
   samplefwlink: http://go.microsoft.com/fwlink/p/?LinkId=620601
@@ -8,7 +24,9 @@
 Shows some common imaging scenarios for Universal Windows apps including metadata and editing/saving.
 
 > **Note:** This sample is part of a large collection of UWP feature samples. 
-> If you are unfamiliar with Git and GitHub, you can download the entire collection as a 
+> You can download this sample as a standalone ZIP file
+> [from docs.microsoft.com](https://docs.microsoft.com/samples/microsoft/windows-universal-samples/simpleimaging/),
+> or you can download the entire collection as a single
 > [ZIP file](https://github.com/Microsoft/Windows-universal-samples/archive/master.zip), but be 
 > sure to unzip everything to access shared dependencies. For more info on working with the ZIP file, 
 > the samples collection, and GitHub, see [Get the UWP samples from GitHub](https://aka.ms/ovu2uq). 
@@ -37,31 +55,25 @@ To obtain information about Microsoft Visual Studio and the tools for developing
 
 All other files provide common SDK sample functionality.
 
-### JS version
-
-- **css\scenario1.css**, **html\scenario1.html**, **js\scenario1.js**: Use the property system APIs (Windows.Storage.FileProperties) to read and edit bitmap properties from an image.
-- **css\scenario2.css**, **html\scenario2.html**, **js\scenario2.js**: Use the imaging APIs (Windows.Graphics.Imaging) to read and edit bitmap properties and apply transformations such as scale, crop and rotate.
-- **js\helpers.cs**: Helper functionality including handling/converting EXIF orientation values.
-
-All other files provide common SDK sample functionality.
-
 ## Related topics
+
+### Reference
 
 [Windows.Storage](http://msdn.microsoft.com/library/windows/apps/br227346)  
 [Windows.Graphics.Imaging](http://msdn.microsoft.com/library/windows/apps/br226400)  
 
+### Related samples
+
+* [SimpleImaging sample](/archived/SimpleImaging/) for JavaScript (archived)
+
 ## System requirements
 
-**Client:** Windows 10
-
-**Server:** Windows Server 2016 Technical Preview
-
-**Phone:** Windows 10
+* Windows 10
 
 ## Build the sample
 
 1. If you download the samples ZIP, be sure to unzip the entire archive, not just the folder with the sample you want to build. 
-2. Start Microsoft Visual Studio 2017 and select **File** \> **Open** \> **Project/Solution**.
+2. Start Microsoft Visual Studio and select **File** \> **Open** \> **Project/Solution**.
 3. Starting in the folder where you unzipped the samples, go to the Samples subfolder, then the subfolder for this specific sample, then the subfolder for your preferred language (C++, C#, or JavaScript). Double-click the Visual Studio Solution (.sln) file.
 4. Press Ctrl+Shift+B, or select **Build** \> **Build Solution**.
 

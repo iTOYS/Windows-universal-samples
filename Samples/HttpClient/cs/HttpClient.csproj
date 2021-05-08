@@ -2,17 +2,20 @@
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
+    <SharedContentDir>$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), LICENSE))\SharedContent</SharedContentDir>
+  </PropertyGroup>
+  <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{291DE7E0-1E5C-5538-B41E-C2171A93F588}</ProjectGuid>
+    <ProjectGuid>{491F0942-0FCD-52C9-AB7D-5C6B952CC93A}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SDKTemplate</RootNamespace>
     <AssemblyName>HttpClient</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.15063.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.15063.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>10.0.18362.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.18362.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
     <FileAlignment>512</FileAlignment>
@@ -88,18 +91,15 @@
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="project.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="..\..\..\SharedContent\cs\App.xaml.cs">
+    <Compile Include="$(SharedContentDir)\cs\App.xaml.cs">
       <Link>App.xaml.cs</Link>
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="..\..\..\SharedContent\cs\MainPage.xaml.cs">
+    <Compile Include="$(SharedContentDir)\cs\MainPage.xaml.cs">
       <Link>MainPage.xaml.cs</Link>
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="..\..\..\SharedContent\cs\AssemblyInfo.cs">
+    <Compile Include="$(SharedContentDir)\cs\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Helpers.cs" />
@@ -124,32 +124,32 @@
     <Compile Include="Scenario15_ServerCertificateValidation.xaml.cs">
       <DependentUpon>..\shared\Scenario15_ServerCertificateValidation.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Scenario1_GetText.xaml.cs">
-      <DependentUpon>..\shared\Scenario1_GetText.xaml</DependentUpon>
+    <Compile Include="Scenario01_GetText.xaml.cs">
+      <DependentUpon>..\shared\Scenario01_GetText.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Scenario2_GetStream.xaml.cs">
-      <DependentUpon>..\shared\Scenario2_GetStream.xaml</DependentUpon>
+    <Compile Include="Scenario02_GetStream.xaml.cs">
+      <DependentUpon>..\shared\Scenario02_GetStream.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Scenario3_GetList.xaml.cs">
-      <DependentUpon>..\shared\Scenario3_GetList.xaml</DependentUpon>
+    <Compile Include="Scenario03_GetList.xaml.cs">
+      <DependentUpon>..\shared\Scenario03_GetList.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Scenario4_PostText.xaml.cs">
-      <DependentUpon>..\shared\Scenario4_PostText.xaml</DependentUpon>
+    <Compile Include="Scenario04_PostText.xaml.cs">
+      <DependentUpon>..\shared\Scenario04_PostText.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Scenario5_PostStream.xaml.cs">
-      <DependentUpon>..\shared\Scenario5_PostStream.xaml</DependentUpon>
+    <Compile Include="Scenario05_PostStream.xaml.cs">
+      <DependentUpon>..\shared\Scenario05_PostStream.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Scenario6_PostMultipart.xaml.cs">
-      <DependentUpon>..\shared\Scenario6_PostMultipart.xaml</DependentUpon>
+    <Compile Include="Scenario06_PostMultipart.xaml.cs">
+      <DependentUpon>..\shared\Scenario06_PostMultipart.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Scenario7_PostStreamWithProgress.xaml.cs">
-      <DependentUpon>..\shared\Scenario7_PostStreamWithProgress.xaml</DependentUpon>
+    <Compile Include="Scenario07_PostStreamWithProgress.xaml.cs">
+      <DependentUpon>..\shared\Scenario07_PostStreamWithProgress.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Scenario8_PostCustomContent.xaml.cs">
-      <DependentUpon>..\shared\Scenario8_PostCustomContent.xaml</DependentUpon>
+    <Compile Include="Scenario08_PostCustomContent.xaml.cs">
+      <DependentUpon>..\shared\Scenario08_PostCustomContent.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Scenario9_GetCookie.xaml.cs">
-      <DependentUpon>..\shared\Scenario9_GetCookie.xaml</DependentUpon>
+    <Compile Include="Scenario09_GetCookie.xaml.cs">
+      <DependentUpon>..\shared\Scenario09_GetCookie.xaml</DependentUpon>
     </Compile>
     <Compile Include="SlowInputStream.cs" />
   </ItemGroup>
@@ -159,17 +159,17 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="..\..\..\SharedContent\xaml\App.xaml">
+    <ApplicationDefinition Include="$(SharedContentDir)\xaml\App.xaml">
       <Link>App.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="..\..\..\SharedContent\cs\MainPage.xaml">
+    <Page Include="$(SharedContentDir)\cs\MainPage.xaml">
       <Link>MainPage.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="..\..\..\SharedContent\xaml\Styles.xaml">
+    <Page Include="$(SharedContentDir)\xaml\Styles.xaml">
       <Link>Styles\Styles.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -204,75 +204,75 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="..\shared\Scenario1_GetText.xaml">
-      <Link>Scenario1_GetText.xaml</Link>
+    <Page Include="..\shared\Scenario01_GetText.xaml">
+      <Link>Scenario01_GetText.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="..\shared\Scenario2_GetStream.xaml">
-      <Link>Scenario2_GetStream.xaml</Link>
+    <Page Include="..\shared\Scenario02_GetStream.xaml">
+      <Link>Scenario02_GetStream.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="..\shared\Scenario3_GetList.xaml">
-      <Link>Scenario3_GetList.xaml</Link>
+    <Page Include="..\shared\Scenario03_GetList.xaml">
+      <Link>Scenario03_GetList.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="..\shared\Scenario4_PostText.xaml">
-      <Link>Scenario4_PostText.xaml</Link>
+    <Page Include="..\shared\Scenario04_PostText.xaml">
+      <Link>Scenario04_PostText.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="..\shared\Scenario5_PostStream.xaml">
-      <Link>Scenario5_PostStream.xaml</Link>
+    <Page Include="..\shared\Scenario05_PostStream.xaml">
+      <Link>Scenario05_PostStream.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="..\shared\Scenario6_PostMultipart.xaml">
-      <Link>Scenario6_PostMultipart.xaml</Link>
+    <Page Include="..\shared\Scenario06_PostMultipart.xaml">
+      <Link>Scenario06_PostMultipart.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="..\shared\Scenario7_PostStreamWithProgress.xaml">
-      <Link>Scenario7_PostStreamWithProgress.xaml</Link>
+    <Page Include="..\shared\Scenario07_PostStreamWithProgress.xaml">
+      <Link>Scenario07_PostStreamWithProgress.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="..\shared\Scenario8_PostCustomContent.xaml">
-      <Link>Scenario8_PostCustomContent.xaml</Link>
+    <Page Include="..\shared\Scenario08_PostCustomContent.xaml">
+      <Link>Scenario08_PostCustomContent.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="..\shared\Scenario9_GetCookie.xaml">
-      <Link>Scenario9_GetCookie.xaml</Link>
+    <Page Include="..\shared\Scenario09_GetCookie.xaml">
+      <Link>Scenario09_GetCookie.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\..\SharedContent\cs\Default.rd.xml">
+    <Content Include="$(SharedContentDir)\cs\Default.rd.xml">
       <Link>Properties\Default.rd.xml</Link>
     </Content>
-    <Content Include="..\..\..\SharedContent\media\microsoft-sdk.png">
+    <Content Include="$(SharedContentDir)\media\microsoft-sdk.png">
       <Link>Assets\microsoft-sdk.png</Link>
     </Content>
-    <Content Include="..\..\..\SharedContent\media\smalltile-sdk.png">
+    <Content Include="$(SharedContentDir)\media\smalltile-sdk.png">
       <Link>Assets\smallTile-sdk.png</Link>
     </Content>
-    <Content Include="..\..\..\SharedContent\media\splash-sdk.png">
+    <Content Include="$(SharedContentDir)\media\splash-sdk.png">
       <Link>Assets\splash-sdk.png</Link>
     </Content>
-    <Content Include="..\..\..\SharedContent\media\squaretile-sdk.png">
+    <Content Include="$(SharedContentDir)\media\squaretile-sdk.png">
       <Link>Assets\squareTile-sdk.png</Link>
     </Content>
-    <Content Include="..\..\..\SharedContent\media\storelogo-sdk.png">
+    <Content Include="$(SharedContentDir)\media\storelogo-sdk.png">
       <Link>Assets\storeLogo-sdk.png</Link>
     </Content>
-    <Content Include="..\..\..\SharedContent\media\tile-sdk.png">
+    <Content Include="$(SharedContentDir)\media\tile-sdk.png">
       <Link>Assets\tile-sdk.png</Link>
     </Content>
-    <Content Include="..\..\..\SharedContent\media\windows-sdk.png">
+    <Content Include="$(SharedContentDir)\media\windows-sdk.png">
       <Link>Assets\windows-sdk.png</Link>
     </Content>
   </ItemGroup>
@@ -281,6 +281,11 @@
       <Project>{dcd26505-40fb-4396-a9fc-92460e709480}</Project>
       <Name>HttpFilters</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
+      <Version>5.0.0</Version>
+    </PackageReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

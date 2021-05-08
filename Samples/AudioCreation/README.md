@@ -1,3 +1,19 @@
+---
+page_type: sample
+languages:
+- csharp
+products:
+- windows
+- windows-uwp
+urlFragment: AudioCreation
+extendedZipContent:
+- path: SharedContent
+  target: SharedContent
+- path: LICENSE
+  target: LICENSE
+description: "Shows how to use the **Windows.Media.Audio** namespace to create audio graphs for audio routing, mixing, and processing scenarios."
+---
+
 <!---
   category: AudioVideoAndCamera
   samplefwlink: http://go.microsoft.com/fwlink/p/?LinkId=619481
@@ -8,7 +24,9 @@
 Shows how to use the **Windows.Media.Audio** namespace to create audio graphs for audio routing, mixing, and processing scenarios. 
 
 > **Note:** This sample is part of a large collection of UWP feature samples. 
-> If you are unfamiliar with Git and GitHub, you can download the entire collection as a 
+> You can download this sample as a standalone ZIP file
+> [from docs.microsoft.com](https://docs.microsoft.com/samples/microsoft/windows-universal-samples/audiocreation/),
+> or you can download the entire collection as a single
 > [ZIP file](https://github.com/Microsoft/Windows-universal-samples/archive/master.zip), but be 
 > sure to unzip everything to access shared dependencies. For more info on working with the ZIP file, 
 > the samples collection, and GitHub, see [Get the UWP samples from GitHub](https://aka.ms/ovu2uq). 
@@ -45,7 +63,7 @@ In the code-behind for this scenario, an **AudioGraph** is created with three no
 This scenario shows how to generate and route audio data into an audio graph from custom code. Press the *Generate Audio* button to start generating audio from custom code.
 Press *Stop* to stop the audio.   
 
-In the code-behind for this scenario an **AudioGraph** is created with two nodes: an **AudioFrameInputNode** that represents the custom audio generation code and which is connected to an **AudioDeviceOutputNode** representing the default output device. The **AudioFrameInputNode** is created with the same encoding as the audio graph so that the generated audio data has the same format as the graph. Once the audio graph is started, the **QuantumStarted** event is raised by the audio graph whenever the custom code needs to provide more audio data. The custom code creates a new **AudioFrame** object in which the audio data is stored. The example accesses the underlying buffer of the **AudioFrame**, which requires an **unsafe** code block, and inserts values from a sine wav into the buffer. The **AudioFrame** containing the audio data is then added to the **AudioFrameInputNode** list of frames ready to be processed, which is then consumed by the audio graph and passed to the audio device output node.  
+In the code-behind for this scenario an **AudioGraph** is created with two nodes: an **AudioFrameInputNode** that represents the custom audio generation code and which is connected to an **AudioDeviceOutputNode** representing the default output device. The **AudioFrameInputNode** is created with the same encoding as the audio graph so that the generated audio data has the same format as the graph. Once the audio graph is started, the **QuantumStarted** event is raised by the audio graph whenever the custom code needs to provide more audio data. The custom code creates a new **AudioFrame** object in which the audio data is stored. The example accesses the underlying buffer of the **AudioFrame**, which requires an **unsafe** code block, and inserts values from a sine wave into the buffer. The **AudioFrame** containing the audio data is then added to the **AudioFrameInputNode** list of frames ready to be processed, which is then consumed by the audio graph and passed to the audio device output node.  
 
 **Scenario 4: Submix Nodes:**  
 In this scenario, audio from two audio files is mixed together and an audio echo effect is added to the mix before the audio is routed to the output device. Press *Load File 1* to select the first audio file and *Load File 2* to select the second file. Press *Start Graph* to start the flow of audio through the graph. Use the *Echo* button to toggle the echo effect on and off while the graph is running.  
@@ -65,7 +83,7 @@ The code-behind for this scenario uses just two nodes. An **AudioFileInputNode**
 **Scenario 6: Custom Effects:**  
 This scenario demonstrates how to create an custom audio effect and then using it in an audio graph. Press the *Load File* button to select an audio file to play. Press *Start Graph* to begin playback of the file with the custom effect.  
 
-The custom effect for this scenario is defined in a single file, CustomEffect.cs, that is included in its own project. The class implemented in this file, AudioEchoEffect, implements the **IBasicAudioEffect** interface which allows it to be used in an audio graph. The actual audio processing is implemented in the **ProcessFrame** method. The audio graph calls this method and passes in a **ProcessAudioFrameContext** object which provides access to **AudioFrame** objects representing the input to the effect and the output from the effect. The effect implements a simple echo by storing samples from the input frame in a buffer and then adding the samples previously stored in the buffer to the current input samples and then inserting thos values into the output frame buffer.  
+The custom effect for this scenario is defined in a single file, CustomEffect.cs, that is included in its own project. The class implemented in this file, AudioEchoEffect, implements the **IBasicAudioEffect** interface which allows it to be used in an audio graph. The actual audio processing is implemented in the **ProcessFrame** method. The audio graph calls this method and passes in a **ProcessAudioFrameContext** object which provides access to **AudioFrame** objects representing the input to the effect and the output from the effect. The effect implements a simple echo by storing samples from the input frame in a buffer and then adding the samples previously stored in the buffer to the current input samples and then inserting those values into the output frame buffer.  
 
 The custom effect has a property set that can be modified by calling the **SetProperties** method. The custom effect exposes a *Mix* property through the property set that is used to control the amount of echo that is added back into the original signal.
 
@@ -86,7 +104,7 @@ Build the sample
 ----------------
 
 1. If you download the samples ZIP, be sure to unzip the entire archive, not just the folder with the sample you want to build. 
-2. Start Microsoft Visual Studio 2017 and select **File** \> **Open** \> **Project/Solution**.
+2. Start Microsoft Visual Studio and select **File** \> **Open** \> **Project/Solution**.
 3. Starting in the folder where you unzipped the samples, go to the Samples subfolder, then the subfolder for this specific sample, then the subfolder for your preferred language (C++, C#, or JavaScript). Double-click the Visual Studio Solution (.sln) file.
 4. Press Ctrl+Shift+B, or select **Build** \> **Build Solution**.
 

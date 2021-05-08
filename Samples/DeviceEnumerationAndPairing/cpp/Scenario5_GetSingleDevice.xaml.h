@@ -13,21 +13,20 @@ namespace SDKTemplate
     /// </summary>
     [Windows::Foundation::Metadata::WebHostHidden]
     [Windows::UI::Xaml::Data::Bindable]
-    public ref class Scenario5 sealed
+    public ref class Scenario5_GetSingleDevice sealed
     {
     public:
-        Scenario5();
-
-        property Windows::Foundation::Collections::IObservableVector<DeviceInformationDisplay^>^ ResultCollection;
+        Scenario5_GetSingleDevice();
 
     protected:
         virtual void OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs^ e) override;
 
     private:
         void GetButton_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
-        void InterfaceIdTextBox_Loaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+        void Page_Loaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 
-        SDKTemplate::MainPage^ rootPage;
-        Windows::Devices::Enumeration::DeviceInformationKind deviceInformationKind;
+        MainPage^ rootPage = MainPage::Current;
+        Windows::Foundation::Collections::IObservableVector<DeviceInformationDisplay^>^ resultCollection = ref new Platform::Collections::Vector<DeviceInformationDisplay^>();
+        Windows::Devices::Enumeration::DeviceInformationKind deviceInformationKind = Windows::Devices::Enumeration::DeviceInformationKind::Unknown;
     };
 }

@@ -17,7 +17,7 @@
 #include "pch.h"
 #include "Scenario1_Download.xaml.h"
 
-using namespace BackgroundTransfer;
+using namespace SDKTemplate;
 
 using namespace Concurrency;
 using namespace Platform;
@@ -177,7 +177,7 @@ void Scenario1_Download::StartDownload(BackgroundTransferPriority priority)
     // validating the URI is required since it was received from an untrusted source (user input).
     // The URI is validated by calling TryGetUri() that will return 'false' for strings that are not valid URIs.
     // Note that when enabling the text box users may provide URIs to machines on the intrAnet that require the
-    // "Home or Work Networking" capability.
+    // "Private Networks (Client and Server)" capability.
     Uri^ source;
     if (!rootPage->TryGetUri(serverAddressField->Text, &source))
     {
@@ -192,8 +192,11 @@ void Scenario1_Download::StartDownload(BackgroundTransferPriority priority)
         return;
     }
 
-    create_task(KnownFolders::PicturesLibrary->CreateFileAsync(destination, CreationCollisionOption::GenerateUniqueName))
-        .then([this, source, priority] (StorageFile^ destinationFile)
+    create_task(KnownFolders::GetFolderForUserAsync(nullptr /* current user */, KnownFolderId::PicturesLibrary))
+        .then([destination](StorageFolder^ picturesLibrary)
+    {
+        return picturesLibrary->CreateFileAsync(destination, CreationCollisionOption::GenerateUniqueName);
+    }).then([this, source, priority] (StorageFile^ destinationFile)
     {
         BackgroundDownloader^ downloader = ref new BackgroundDownloader();
         DownloadOperation^ download = downloader->CreateDownload(source, destinationFile);

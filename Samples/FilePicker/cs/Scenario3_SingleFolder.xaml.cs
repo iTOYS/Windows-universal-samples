@@ -22,14 +22,13 @@ namespace SDKTemplate
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class Scenario3 : Page
+    public sealed partial class Scenario3_SingleFolder : Page
     {
         MainPage rootPage = MainPage.Current;
 
-        public Scenario3()
+        public Scenario3_SingleFolder()
         {
             this.InitializeComponent();
-            PickFolderButton.Click += new RoutedEventHandler(PickFolderButton_Click);
         }
 
         private async void PickFolderButton_Click(object sender, RoutedEventArgs e)

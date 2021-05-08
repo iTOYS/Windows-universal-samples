@@ -2,16 +2,19 @@
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
+    <SharedContentDir>$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), LICENSE))\SharedContent</SharedContentDir>
+  </PropertyGroup>
+  <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <ProjectGuid>{EEF4E054-5F0B-5E55-B1F9-C9E50608E753}</ProjectGuid>
+    <ProjectGuid>{49021CAD-8D94-5329-9596-28F39EA8340E}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AudioCategoryCompanion</RootNamespace>
     <AssemblyName>AudioCategoryCompanion</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.15063.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.15063.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>10.0.18362.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.18362.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
     <FileAlignment>512</FileAlignment>
@@ -87,13 +90,10 @@
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="project.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="..\..\..\..\SharedContent\cs\App.xaml.cs">
+    <Compile Include="$(SharedContentDir)\cs\App.xaml.cs">
       <Link>App.xaml.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\..\SharedContent\cs\MainPage.xaml.cs">
+    <Compile Include="$(SharedContentDir)\cs\MainPage.xaml.cs">
       <Link>MainPage.xaml.cs</Link>
     </Compile>
     <Compile Include="..\AudioCategory\PlaybackControl.xaml.cs">
@@ -132,7 +132,7 @@
     <Compile Include="..\AudioCategory\Scenario9.xaml.cs">
       <Link>Scenario9.xaml.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\..\SharedContent\cs\AssemblyInfo.cs">
+    <Compile Include="$(SharedContentDir)\cs\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
   </ItemGroup>
@@ -142,12 +142,12 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="..\..\..\..\SharedContent\xaml\App.xaml">
+    <ApplicationDefinition Include="$(SharedContentDir)\xaml\App.xaml">
       <Link>App.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="..\..\..\..\SharedContent\cs\MainPage.xaml">
+    <Page Include="$(SharedContentDir)\cs\MainPage.xaml">
       <Link>MainPage.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -207,37 +207,42 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="..\..\..\..\SharedContent\xaml\Styles.xaml">
+    <Page Include="$(SharedContentDir)\xaml\Styles.xaml">
       <Link>Styles\Styles.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\..\..\SharedContent\cs\Default.rd.xml">
+    <Content Include="$(SharedContentDir)\cs\Default.rd.xml">
       <Link>Properties\Default.rd.xml</Link>
     </Content>
-    <Content Include="..\..\..\..\SharedContent\media\microsoft-sdk.png">
+    <Content Include="$(SharedContentDir)\media\microsoft-sdk.png">
       <Link>Assets\microsoft-sdk.png</Link>
     </Content>
-    <Content Include="..\..\..\..\SharedContent\media\smalltile-sdk.png">
+    <Content Include="$(SharedContentDir)\media\smalltile-sdk.png">
       <Link>Assets\smalltile-sdk.png</Link>
     </Content>
-    <Content Include="..\..\..\..\SharedContent\media\splash-sdk.png">
+    <Content Include="$(SharedContentDir)\media\splash-sdk.png">
       <Link>Assets\splash-sdk.png</Link>
     </Content>
-    <Content Include="..\..\..\..\SharedContent\media\squaretile-sdk.png">
+    <Content Include="$(SharedContentDir)\media\squaretile-sdk.png">
       <Link>Assets\squaretile-sdk.png</Link>
     </Content>
-    <Content Include="..\..\..\..\SharedContent\media\storelogo-sdk.png">
+    <Content Include="$(SharedContentDir)\media\storelogo-sdk.png">
       <Link>Assets\storelogo-sdk.png</Link>
     </Content>
-    <Content Include="..\..\..\..\SharedContent\media\tile-sdk.png">
+    <Content Include="$(SharedContentDir)\media\tile-sdk.png">
       <Link>Assets\tile-sdk.png</Link>
     </Content>
-    <Content Include="..\..\..\..\SharedContent\media\windows-sdk.png">
+    <Content Include="$(SharedContentDir)\media\windows-sdk.png">
       <Link>Assets\windows-sdk.png</Link>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
+      <Version>5.0.0</Version>
+    </PackageReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

@@ -8,21 +8,14 @@
 
 namespace SDKTemplate
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     [Windows::Foundation::Metadata::WebHostHidden]
-    [Windows::UI::Xaml::Data::Bindable]
-    public ref class Scenario1 sealed
+    public ref class Scenario1_DevicePicker sealed
     {
     public:
-        Scenario1();
-
-        property Windows::Foundation::Collections::IObservableVector<DeviceInformationDisplay^>^ ResultCollection;
+        Scenario1_DevicePicker();
 
     protected:
         virtual void OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs^ e) override;
-        virtual void OnNavigatedFrom(Windows::UI::Xaml::Navigation::NavigationEventArgs^ e) override;
 
     private:
         void PickSingleDeviceButton_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
@@ -30,7 +23,7 @@ namespace SDKTemplate
 
         void ShowDevicePicker(bool pickSingle);
 
-        SDKTemplate::MainPage^ rootPage;
-        Windows::Devices::Enumeration::DevicePicker^ devicePicker;
+        MainPage^ rootPage = MainPage::Current;
+        Windows::Foundation::Collections::IObservableVector<DeviceInformationDisplay^>^ resultCollection = ref new Platform::Collections::Vector<DeviceInformationDisplay^>();
     };
 }

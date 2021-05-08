@@ -5,20 +5,15 @@
 #include "Scenario9_CustomPairDevice.g.h"
 #include "MainPage.xaml.h"
 #include "DisplayHelpers.h"
+#include "DeviceWatcherHelper.h"
 
 namespace SDKTemplate
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     [Windows::Foundation::Metadata::WebHostHidden]
-    [Windows::UI::Xaml::Data::Bindable]
-    public ref class Scenario9 sealed
+    public ref class Scenario9_CustomPairDevice sealed
     {
     public:
-        Scenario9();
-
-        property Windows::Foundation::Collections::IObservableVector<DeviceInformationDisplay^>^ ResultCollection;
+        Scenario9_CustomPairDevice();
 
     protected:
         virtual void OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs^ e) override;
@@ -44,22 +39,22 @@ namespace SDKTemplate
         concurrency::task<bool> GetUserConfirmationAsync(Platform::String^ pin);
         void CompleteConfirmPinTask(bool accept);
         void okButton_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+        void verifyButton_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+        concurrency::task<Windows::Security::Credentials::PasswordCredential^> GetPasswordCredentialFromUserAsync();
+        void CompletePasswordCredential(Platform::String^ username = nullptr, Platform::String^ password = nullptr);
         void yesButton_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
         void noButton_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
         
+        void OnDeviceListChanged(Windows::Devices::Enumeration::DeviceWatcher^ sender, Platform::String^ id);
         void UpdatePairingButtons();
         Windows::Devices::Enumeration::DevicePairingKinds GetSelectedCeremonies();
 
-        SDKTemplate::MainPage^ rootPage;
-        Windows::Devices::Enumeration::DeviceWatcher^ deviceWatcher;
-        Windows::Foundation::EventRegistrationToken handlerAddedToken;
-        Windows::Foundation::EventRegistrationToken handlerUpdatedToken;
-        Windows::Foundation::EventRegistrationToken handlerRemovedToken;
-        Windows::Foundation::EventRegistrationToken handlerEnumCompletedToken;
-        Windows::Foundation::EventRegistrationToken handlerStoppedAddedToken;
-        Windows::Foundation::EventRegistrationToken handlerPairingRequestedToken;
+        MainPage^ rootPage = MainPage::Current;
+        Windows::Foundation::Collections::IObservableVector<DeviceInformationDisplay^>^ resultCollection = ref new Platform::Collections::Vector<DeviceInformationDisplay^>();
+        DeviceWatcherHelper^ deviceWatcherHelper;
 
-        std::unique_ptr<concurrency::task_completion_event<Platform::String^>> providePinTaskSrc;
-        std::unique_ptr<concurrency::task_completion_event<bool>> confirmPinTaskSrc;
+        concurrency::task_completion_event<Platform::String^> providePinTaskSrc;
+        concurrency::task_completion_event<bool> confirmPinTaskSrc;
+        concurrency::task_completion_event<Windows::Security::Credentials::PasswordCredential^> providePasswordCredentialSrc;
     };
 }

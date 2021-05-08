@@ -17,7 +17,7 @@
 #include "pch.h"
 #include "Scenario3_Notifications.xaml.h"
 
-using namespace BackgroundTransfer;
+using namespace SDKTemplate;
 
 using namespace Concurrency;
 using namespace Platform;
@@ -267,8 +267,11 @@ bool Scenario3_Notifications::TryCreateDownloadAsync(
     }
 
     String^ fileName = ((type == ScenarioType::Tile) ? L"Tile" : L"Toast") + "." + runId + "." + fileNameSuffix + ".txt";
-    resultTask = create_task(KnownFolders::PicturesLibrary->CreateFileAsync(fileName, CreationCollisionOption::GenerateUniqueName))
-        .then([this, source, downloader, downloadOperations] (StorageFile^ destinationFile)
+    resultTask = create_task(KnownFolders::GetFolderForUserAsync(nullptr /* current user */, KnownFolderId::PicturesLibrary))
+        .then([fileName](StorageFolder^ picturesLibrary)
+    {
+        return picturesLibrary->CreateFileAsync(fileName, CreationCollisionOption::GenerateUniqueName);
+    }).then([this, source, downloader, downloadOperations] (StorageFile^ destinationFile)
     {
         downloadOperations->Append(downloader->CreateDownload(source, destinationFile));
 

@@ -1,4 +1,22 @@
-﻿<!---
+---
+page_type: sample
+languages:
+- csharp
+- cpp
+- cppcx
+products:
+- windows
+- windows-uwp
+urlFragment: ShareSource
+extendedZipContent:
+- path: SharedContent
+  target: SharedContent
+- path: LICENSE
+  target: LICENSE
+description: "Shows how an app shares content with another app."
+---
+
+<!---
   category: DeepLinksAndAppToAppCommunication
   samplefwlink: http://go.microsoft.com/fwlink/p/?LinkId=620596
 --->
@@ -9,7 +27,9 @@ Shows how an app shares content with another app. This sample uses classes from 
 [Windows.ApplicationModel.DataTransfer](http://msdn.microsoft.com/library/windows/apps/br205967) namespace. 
 
 > **Note:** This sample is part of a large collection of UWP feature samples. 
-> If you are unfamiliar with Git and GitHub, you can download the entire collection as a 
+> You can download this sample as a standalone ZIP file
+> [from docs.microsoft.com](https://docs.microsoft.com/samples/microsoft/windows-universal-samples/sharesource/),
+> or you can download the entire collection as a single
 > [ZIP file](https://github.com/Microsoft/Windows-universal-samples/archive/master.zip), but be 
 > sure to unzip everything to access shared dependencies. For more info on working with the ZIP file, 
 > the samples collection, and GitHub, see [Get the UWP samples from GitHub](https://aka.ms/ovu2uq). 
@@ -37,7 +57,7 @@ This sample demonstrates the following:
 * Displaying a custom message when your app has nothing to share.
 * Adding a custom [ShareProvider](https://docs.microsoft.com/uwp/api/windows.applicationmodel.datatransfer.shareprovider) so your app can be its own share target.
 
-**Note** The Windows universal samples require Visual Studio 2017 to build and Windows 10 to execute.
+**Note** The Windows universal samples require Visual Studio to build and Windows 10 to execute.
  
 To obtain information about Windows 10 development, go to the [Windows Dev Center](http://go.microsoft.com/fwlink/?LinkID=532421)
 
@@ -53,31 +73,27 @@ For more info about the concepts and APIs demonstrated in this sample, see these
 
 -   [Sharing content target app sample](http://go.microsoft.com/fwlink/p/?linkid=231519)
 -   [Sharing and exchanging data](http://msdn.microsoft.com/library/windows/apps/hh464923)
--   [How to share files (HTML)](http://msdn.microsoft.com/library/windows/apps/hh758308)
 -   [How to share files (XAML)](http://msdn.microsoft.com/library/windows/apps/hh871371)
--   [How to share HTML (HTML)](http://msdn.microsoft.com/library/windows/apps/hh758310)
 -   [How to share HTML (XAML)](http://msdn.microsoft.com/library/windows/apps/hh973055)
--   [How to share text (HTML)](http://msdn.microsoft.com/library/windows/apps/hh758313)
 -   [How to share text (XAML)](http://msdn.microsoft.com/library/windows/apps/hh871372)
--   [Quickstart: Sharing content (HTML)](http://msdn.microsoft.com/library/windows/apps/hh465261)
 -   [Share data](https://msdn.microsoft.com/library/windows/apps/mt243293)
 -   [DataPackageView](http://msdn.microsoft.com/library/windows/apps/hh738408)
 -   [ShareOperation](http://msdn.microsoft.com/library/windows/apps/br205977)
 -   [Windows.ApplicationModel.DataTransfer](http://msdn.microsoft.com/library/windows/apps/br205967)
 -   [Windows.ApplicationModel.DataTransfer.Share](http://msdn.microsoft.com/library/windows/apps/br205989)
 
+### Related samples
+
+* [ShareSource sample](/archived/ShareSource/) for JavaScript (archived)
+
 ## System requirements
 
-**Client:** Windows 10
-
-**Server:** Windows Server 2016 Technical Preview
-
-**Phone:** Windows 10
+* Windows 10
 
 ## Build the sample
 
 1. If you download the samples ZIP, be sure to unzip the entire archive, not just the folder with the sample you want to build. 
-2. Start Microsoft Visual Studio 2017 and select **File** \> **Open** \> **Project/Solution**.
+2. Start Microsoft Visual Studio and select **File** \> **Open** \> **Project/Solution**.
 3. Starting in the folder where you unzipped the samples, go to the Samples subfolder, then the subfolder for this specific sample, then the subfolder for your preferred language (C++, C#, or JavaScript). Double-click the Visual Studio Solution (.sln) file.
 4. Press Ctrl+Shift+B, or select **Build** \> **Build Solution**.
 

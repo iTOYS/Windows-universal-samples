@@ -21,20 +21,15 @@ using Windows.Web.Http.Filters;
 
 namespace SDKTemplate
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
-    public sealed partial class Scenario14 : Page, IDisposable
+    public sealed partial class Scenario14_MeteredConnectionFilter : Page
     {
-        // A pointer back to the main page.  This is needed if you want to call methods in MainPage such
-        // as NotifyUser()
         MainPage rootPage = MainPage.Current;
 
         private HttpMeteredConnectionFilter meteredConnectionFilter;
         private HttpClient httpClient;
         private CancellationTokenSource cts;
 
-        public Scenario14()
+        public Scenario14_MeteredConnectionFilter()
         {
             this.InitializeComponent();
         }
@@ -49,24 +44,18 @@ namespace SDKTemplate
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            // If the navigation is external to the app do not clean up.
-            // This can occur on Phone when suspending the app.
-            if (e.NavigationMode == NavigationMode.Forward && e.Uri == null)
-            {
-                return;
-            }
-
-            base.OnNavigatedFrom(e);
-            Dispose();
+            cts.Cancel();
+            cts.Dispose();
+            httpClient.Dispose();
+            meteredConnectionFilter.Dispose();
         }
 
         private async void Start_Click(object sender, RoutedEventArgs e)
         {
-            Uri resourceAddress;
-
             // The value of 'AddressField' is set by the user and is therefore untrusted input. If we can't create a
             // valid, absolute URI, we'll notify the user about the incorrect input.
-            if (!Helpers.TryGetUri(AddressField.Text, out resourceAddress))
+            Uri resourceUri = Helpers.TryParseHttpUri(AddressField.Text);
+            if (resourceUri == null)
             {
                 rootPage.NotifyUser("Invalid URI.", NotifyType.ErrorMessage);
                 return;
@@ -75,39 +64,42 @@ namespace SDKTemplate
             Helpers.ScenarioStarted(StartButton, CancelButton, OutputField);
             rootPage.NotifyUser("In progress", NotifyType.StatusMessage);
 
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, resourceUri);
+
+            MeteredConnectionPriority priority = MeteredConnectionPriority.Low;
+            if (MediumRadio.IsChecked.Value)
+            {
+                priority = MeteredConnectionPriority.Medium;
+            }
+            else if (HighRadio.IsChecked.Value)
+            {
+                priority = MeteredConnectionPriority.High;
+            }
+            request.Properties[HttpMeteredConnectionFilter.MeteredConnectionPriorityPropertyName] = priority;
+
+            // This sample uses a "try" in order to support TaskCanceledException.
+            // If you don't need to support cancellation, then the "try" is not needed.
             try
             {
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, resourceAddress);
+                HttpRequestResult result = await httpClient.TrySendRequestAsync(request).AsTask(cts.Token);
 
-                MeteredConnectionPriority priority = MeteredConnectionPriority.Low;
-                if (MediumRadio.IsChecked.Value)
+                if (result.Succeeded)
                 {
-                    priority = MeteredConnectionPriority.Medium;
+                    await Helpers.DisplayTextResultAsync(result.ResponseMessage, OutputField, cts.Token);
+
+                    rootPage.NotifyUser("Completed", NotifyType.StatusMessage);
                 }
-                else if (HighRadio.IsChecked.Value)
+                else
                 {
-                    priority = MeteredConnectionPriority.High;
+                    Helpers.DisplayWebError(rootPage, result.ExtendedError);
                 }
-                request.Properties["meteredConnectionPriority"] = priority;
-
-                HttpResponseMessage response = await httpClient.SendRequestAsync(request).AsTask(cts.Token);
-
-                await Helpers.DisplayTextResultAsync(response, OutputField, cts.Token);
-
-                rootPage.NotifyUser("Completed", NotifyType.StatusMessage);
             }
             catch (TaskCanceledException)
             {
                 rootPage.NotifyUser("Request canceled.", NotifyType.ErrorMessage);
             }
-            catch (Exception ex)
-            {
-                rootPage.NotifyUser("Error: " + ex.Message, NotifyType.ErrorMessage);
-            }
-            finally
-            {
-                Helpers.ScenarioCompleted(StartButton, CancelButton);
-            }
+
+            Helpers.ScenarioCompleted(StartButton, CancelButton);
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
@@ -117,26 +109,6 @@ namespace SDKTemplate
 
             // Re-create the CancellationTokenSource.
             cts = new CancellationTokenSource();
-        }
-
-        public void Dispose()
-        {
-            if (meteredConnectionFilter != null)
-            {
-                meteredConnectionFilter.Dispose();
-                meteredConnectionFilter = null;
-            }
-            if (httpClient != null)
-            {
-                httpClient.Dispose();
-                httpClient = null;
-            }
-
-            if (cts != null)
-            {
-                cts.Dispose();
-                cts = null;
-            }
         }
 
         private void OptInSwitch_Toggled(object sender, RoutedEventArgs e)

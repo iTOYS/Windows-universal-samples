@@ -1,3 +1,21 @@
+---
+page_type: sample
+languages:
+- csharp
+- cpp
+- cppcx
+products:
+- windows
+- windows-uwp
+urlFragment: CustomHidDeviceAccess
+extendedZipContent:
+- path: SharedContent
+  target: SharedContent
+- path: LICENSE
+  target: LICENSE
+description: "Shows how to use the Windows.Devices.HumanInterfaceDevices API."
+---
+
 <!---
   category: DevicesSensorsAndPower
   samplefwlink: http://go.microsoft.com/fwlink/p/?LinkId=620527
@@ -9,7 +27,9 @@ Shows how to use the [Windows.Devices.HumanInterfaceDevices](http://msdn.microso
 Designed to work with a programmable, USB-based, HID device called the SuperMUTT.
 
 > **Note:** This sample is part of a large collection of UWP feature samples. 
-> If you are unfamiliar with Git and GitHub, you can download the entire collection as a 
+> You can download this sample as a standalone ZIP file
+> [from docs.microsoft.com](https://docs.microsoft.com/samples/microsoft/windows-universal-samples/customhiddeviceaccess/),
+> or you can download the entire collection as a single
 > [ZIP file](https://github.com/Microsoft/Windows-universal-samples/archive/master.zip), but be 
 > sure to unzip everything to access shared dependencies. For more info on working with the ZIP file, 
 > the samples collection, and GitHub, see [Get the UWP samples from GitHub](https://aka.ms/ovu2uq). 
@@ -88,7 +108,7 @@ Also, whenever the app is suspended, it executes code that disconnects from the 
 ## Build the sample
 
 1. If you download the samples ZIP, be sure to unzip the entire archive, not just the folder with the sample you want to build. 
-2. Start Microsoft Visual Studio 2017 and select **File** \> **Open** \> **Project/Solution**.
+2. Start Microsoft Visual Studio and select **File** \> **Open** \> **Project/Solution**.
 3. Starting in the folder where you unzipped the samples, go to the Samples subfolder, then the subfolder for this specific sample, then the subfolder for your preferred language (C++, C#, or JavaScript). Double-click the Visual Studio Solution (.sln) file.
 4. Press Ctrl+Shift+B, or select **Build** \> **Build Solution**.
 
@@ -104,9 +124,9 @@ Note that the **Windows.Devices.HumanInterfaceDevice** API does not support cust
 
 ## Understanding the app manifest
 
-The app manifest is an XML document that contains the info the system needs to deploy, display, or update a Windows Store app. This info includes package identity, package dependencies, required capabilities, visual elements, and extensibility points. Every app package must include one package manifest.
+The app manifest is an XML document that contains the info the system needs to deploy, display, or update an app. This info includes package identity, package dependencies, required capabilities, visual elements, and extensibility points. Every app package must include one package manifest.
 
-A Windows Store app that accesses a HID device must include specific **DeviceCapability** data in the **Capabilities** node of its manifest. This data identifies the device and its purpose (or function). Note that some devices may have multiple functions.
+An app that accesses a HID device must include specific **DeviceCapability** data in the **Capabilities** node of its manifest. This data identifies the device and its purpose (or function). Note that some devices may have multiple functions.
 
 The **Device Id** element corresponds to the device identifier. This element may specify a combination **Vendor Id** (vid) and **Product Id** (pid); or, it may specify a generic string ("any"). In addition, the **Device ID** may contain an optional provider string of "usb" or "bluetooth".
 
@@ -161,7 +181,7 @@ This API is designed primarily for accessing peripheral devices. That said, you 
 
 **Not designed for Control Panel apps**
 
-This API is intended for Windows Store apps. Because there is no way for these apps to save settings outside of application scope you should not use it to write Control Panel apps.
+This API is intended for Windows Runtime apps. Because there is no way for these apps to save settings outside of application scope you should not use it to write Control Panel apps.
 
 **Host Controller Limitations**
 

@@ -1,3 +1,21 @@
+---
+page_type: sample
+languages:
+- csharp
+- cpp
+- cppcx
+products:
+- windows
+- windows-uwp
+urlFragment: CortanaVoiceCommand
+extendedZipContent:
+- path: SharedContent
+  target: SharedContent
+- path: LICENSE
+  target: LICENSE
+description: "Shows how to integrate with Cortana by providing Voice Command Definitions (VCDs) that allow an app to be invoked in a variety of ways."
+---
+
 <!---
   category: SpeechAndCortana 
   samplefwlink: http://go.microsoft.com/fwlink/p/?LinkId=619899
@@ -8,7 +26,9 @@
 Shows how to integrate with Cortana by providing Voice Command Definitions (VCDs) that allow an app to be invoked in a variety of ways.
 
 > **Note:** This sample is part of a large collection of UWP feature samples. 
-> If you are unfamiliar with Git and GitHub, you can download the entire collection as a 
+> You can download this sample as a standalone ZIP file
+> [from docs.microsoft.com](https://docs.microsoft.com/samples/microsoft/windows-universal-samples/cortanavoicecommand/),
+> or you can download the entire collection as a single
 > [ZIP file](https://github.com/Microsoft/Windows-universal-samples/archive/master.zip), but be 
 > sure to unzip everything to access shared dependencies. For more info on working with the ZIP file, 
 > the samples collection, and GitHub, see [Get the UWP samples from GitHub](https://aka.ms/ovu2uq). 
@@ -29,20 +49,6 @@ Specifically, this sample covers:
 -   Implements progress screens, ensuring that Cortana does not time out during lengthy I/O operations (AdventureWorksVoiceCommandService.cs:ShowProgressScreen())
 -   Infix/Suffix Voice Command support, allowing for more natural phrases to be used. 
 
-
-**WinJS:**
-
-- Installing a VCD file. (installVCD.js, AdventureWorksCommands.xml)
-- Using a WebWorker to install the VCD in the background, speeding up app initialization (default.js, installVCD.js)
-- Updating a phrase list within a VCD file at runtime. (installVCD.js, tripDetails.js)
-- Registration of a background task and protocol handler for Cortana (Package.appxmanifest, AdventureWorksCommands.xml)
-- Implement a background task and Voice Command services for Cortana (voiceCommandService.js), including:
-  - Simple headless Cortana background activation for displaying content within Cortana (when is my trip to *destination*)
-  - Confirmation dialogs (cancel trip to *destination*)
-  - Disambiguation of multiple items with automatic reprompting.
-  - Resolution scaling images
-  - Progress dialogs for lengthy operations.
-  
 **C++/CX**
 
 -  Installing a VCD file. (adventureworkscommands.xml, App.xaml.cpp:OnLaunched() )
@@ -85,38 +91,31 @@ Duplicates can also be handled. For an example of handling disambiguation, add a
 
 - "Adventure Works, cancel trip to London"
 
-## Known Issues
-
-* WinJS version of the sample app is not localized. It should handle dates correctly in alternate regions, but currently does not install a localized VCD, or provide localized strings to Cortana.
-
 ## Related topics
+
+### Conceptual
 
 [Cortana design guidelines](https://msdn.microsoft.com/library/windows/apps/xaml/dn974233.aspx)  
 [Cortana interactions (XAML)](https://msdn.microsoft.com/library/windows/apps/mt185598)  
 [Cortana interactions (HTML)](https://msdn.microsoft.com/library/windows/apps/dn974231.aspx)  
 
-## See also
+### Related samples
 
-[Family Notes sample](https://github.com/Microsoft/Windows-appsample-familynotes)  
-[Hue Lights sample](https://github.com/Microsoft/Windows-appsample-huelightcontroller)  
-[WebWorkers](https://msdn.microsoft.com/library/hh673568.aspx)
+* [Family Notes sample](https://github.com/Microsoft/Windows-appsample-familynotes)
+* [Hue Lights sample](https://github.com/Microsoft/Windows-appsample-huelightcontroller)
+* [CortanaVoiceCommand sample](/archived/CortanaVoiceCommand/) for JavaScript (archived)
 
 ## System requirements
 
-**Client:** Windows 10
-
-**Server:** Windows Server 2016 Technical Preview
-
-**Phone:** Windows 10
-
-Cortana requires an appropriate recording device, and the system must be associated with a Microsoft Account in order for Cortana to function.
+* Windows 10
+* Cortana requires an appropriate recording device, and the system must be associated with a Microsoft Account in order for Cortana to function.
 
 ## Build the sample
 
 **Note:** This sample has special instructions in the Setup section above. 
 
 1. If you download the samples ZIP, be sure to unzip the entire archive, not just the folder with the sample you want to build. 
-2. Start Microsoft Visual Studio 2017 and select **File** \> **Open** \> **Project/Solution**.
+2. Start Microsoft Visual Studio and select **File** \> **Open** \> **Project/Solution**.
 3. Starting in the folder where you unzipped the samples, go to the Samples subfolder, then the subfolder for this specific sample, then the subfolder for your preferred language (C++, C#, or JavaScript). Double-click the Visual Studio Solution (.sln) file.
 4. Press Ctrl+Shift+B, or select **Build** \> **Build Solution**.
 

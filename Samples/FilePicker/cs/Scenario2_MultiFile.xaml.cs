@@ -23,14 +23,13 @@ namespace SDKTemplate
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class Scenario2 : Page
+    public sealed partial class Scenario2_MultiFile : Page
     {
         MainPage rootPage = MainPage.Current;
 
-        public Scenario2()
+        public Scenario2_MultiFile()
         {
             this.InitializeComponent();
-            PickFilesButton.Click += new RoutedEventHandler(PickFilesButton_Click);
         }
 
         private async void PickFilesButton_Click(object sender, RoutedEventArgs e)

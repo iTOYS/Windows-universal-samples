@@ -7,33 +7,27 @@ using namespace SDKTemplate;
 
 using namespace Platform;
 using namespace Platform::Collections;
+using namespace Windows::ApplicationModel::Background;
+using namespace Windows::Devices::Enumeration;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
+using namespace Windows::Storage;
 using namespace Windows::UI::Core;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
-using namespace Windows::UI::Xaml::Controls::Primitives;
-using namespace Windows::UI::Xaml::Data;
-using namespace Windows::UI::Xaml::Input;
-using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
-using namespace Windows::Devices::Enumeration;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
-Scenario3::Scenario3() : 
-    rootPage(MainPage::Current),
-    backgroundTaskRegistration(nullptr)
+Scenario3_BackgroundDeviceWatcher::Scenario3_BackgroundDeviceWatcher()
 {
     InitializeComponent();
 }
 
-void Scenario3::OnNavigatedTo(NavigationEventArgs^ e)
+void Scenario3_BackgroundDeviceWatcher::OnNavigatedTo(NavigationEventArgs^ e)
 {
     selectorComboBox->ItemsSource = DeviceSelectorChoices::BackgroundDeviceWatcherSelectors;
     selectorComboBox->SelectedIndex = 0;
-
-    DataContext = this;
 
     // Determine if the background task is already active
     std::for_each(begin(BackgroundTaskRegistration::AllTasks), end(BackgroundTaskRegistration::AllTasks), [&](IKeyValuePair<Guid, IBackgroundTaskRegistration^>^ task)
@@ -47,17 +41,27 @@ void Scenario3::OnNavigatedTo(NavigationEventArgs^ e)
     });
 }
 
-void Scenario3::StartWatcherButton_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+void Scenario3_BackgroundDeviceWatcher::OnNavigatedFrom(NavigationEventArgs^ e)
+{
+    if (backgroundTaskCompletedToken.Value)
+    {
+        backgroundTaskRegistration->Completed -= backgroundTaskCompletedToken;
+        backgroundTaskCompletedToken = {};
+    }
+    backgroundTaskRegistration = nullptr;
+}
+
+void Scenario3_BackgroundDeviceWatcher::StartWatcherButton_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
     StartWatcher();
 }
 
-void Scenario3::StopWatcherButton_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+void Scenario3_BackgroundDeviceWatcher::StopWatcherButton_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
     StopWatcher();
 }
 
-void Scenario3::StartWatcher()
+void Scenario3_BackgroundDeviceWatcher::StartWatcher()
 {
     Vector<DeviceWatcherEventKind>^ triggerEventKinds = ref new Vector<DeviceWatcherEventKind>({
         DeviceWatcherEventKind::Add, 
@@ -106,7 +110,7 @@ void Scenario3::StartWatcher()
     rootPage->NotifyUser("Watcher started...", NotifyType::StatusMessage);
 }
 
-void Scenario3::RegisterBackgroundTask(DeviceWatcherTrigger^ deviceWatcherTrigger)
+void Scenario3_BackgroundDeviceWatcher::RegisterBackgroundTask(DeviceWatcherTrigger^ deviceWatcherTrigger)
 {
     BackgroundTaskBuilder^ taskBuilder = nullptr;
 
@@ -127,7 +131,7 @@ void Scenario3::RegisterBackgroundTask(DeviceWatcherTrigger^ deviceWatcherTrigge
     taskBuilder->SetTrigger(deviceWatcherTrigger);
 
     backgroundTaskRegistration = taskBuilder->Register();
-    backgroundTaskRegistration->Completed += ref new BackgroundTaskCompletedEventHandler(
+    backgroundTaskCompletedToken = backgroundTaskRegistration->Completed += ref new BackgroundTaskCompletedEventHandler(
         [this](BackgroundTaskRegistration^ sender, BackgroundTaskCompletedEventArgs^ args)
     {
         rootPage->Dispatcher->RunAsync(CoreDispatcherPriority::Low, ref new DispatchedHandler(
@@ -138,7 +142,7 @@ void Scenario3::RegisterBackgroundTask(DeviceWatcherTrigger^ deviceWatcherTrigge
     });
 }
 
-void Scenario3::StopWatcher()
+void Scenario3_BackgroundDeviceWatcher::StopWatcher()
 {
     stopWatcherButton->IsEnabled = false;
     if (nullptr != backgroundTaskRegistration)
@@ -148,7 +152,7 @@ void Scenario3::StopWatcher()
     startWatcherButton->IsEnabled = true;
 }
 
-void Scenario3::UnregisterBackgroundTask(IBackgroundTaskRegistration^ taskReg)
+void Scenario3_BackgroundDeviceWatcher::UnregisterBackgroundTask(IBackgroundTaskRegistration^ taskReg)
 {
     taskReg->Unregister(true);
     ApplicationDataContainer^ settings = ApplicationData::Current->LocalSettings;

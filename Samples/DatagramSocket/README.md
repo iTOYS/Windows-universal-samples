@@ -1,4 +1,22 @@
-﻿<!---
+---
+page_type: sample
+languages:
+- csharp
+- cpp
+- cppcx
+products:
+- windows
+- windows-uwp
+urlFragment: DatagramSocket
+extendedZipContent:
+- path: SharedContent
+  target: SharedContent
+- path: LICENSE
+  target: LICENSE
+description: "Shows how to a use datagram (UDP) socket to send and receive data."
+---
+
+<!---
   category: NetworkingAndWebServices 
   samplefwlink: http://go.microsoft.com/fwlink/p/?LinkId=620534
 --->
@@ -9,7 +27,9 @@ Shows how to a use datagram (UDP) socket to send and receive data using the [Dat
 and related classes in the [Windows.Networking.Sockets](http://msdn.microsoft.com/library/windows/apps/br226960) namespace in your Universal Windows Platform (UWP) app.
 
 > **Note:** This sample is part of a large collection of UWP feature samples. 
-> If you are unfamiliar with Git and GitHub, you can download the entire collection as a 
+> You can download this sample as a standalone ZIP file
+> [from docs.microsoft.com](https://docs.microsoft.com/samples/microsoft/windows-universal-samples/datagramsocket/),
+> or you can download the entire collection as a single
 > [ZIP file](https://github.com/Microsoft/Windows-universal-samples/archive/master.zip), but be 
 > sure to unzip everything to access shared dependencies. For more info on working with the ZIP file, 
 > the samples collection, and GitHub, see [Get the UWP samples from GitHub](https://aka.ms/ovu2uq). 
@@ -58,11 +78,6 @@ This sample requires that network capabilities be set in the *Package.appxmanife
 [Windows.Storage.Streams.DataWriter](http://msdn.microsoft.com/library/windows/apps/br208154)  
 [SocketActivityTrigger](https://msdn.microsoft.com/library/windows/apps/windows.applicationmodel.background.socketactivitytrigger.aspx)  
 
-### Samples
-
-[StreamSocket sample](/Samples/StreamSocket)  
-[SocketActivityTrigger StreamSocket Sample](/Samples/SocketActivityStreamSocket)  
-
 ### Other - C\#/VB/C++ and XAML
 
 [Adding support for networking (XAML)](http://msdn.microsoft.com/library/windows/apps/hh452751)  
@@ -72,27 +87,20 @@ This sample requires that network capabilities be set in the *Package.appxmanife
 [How to use advanced socket controls (XAML)](http://msdn.microsoft.com/library/windows/apps/jj150598)  
 [Troubleshooting and debugging network connections](http://msdn.microsoft.com/library/windows/apps/hh770534)  
 
-### Other - JavaScript and HTML
+### Related samples
 
-[Adding support for networking (HTML)](http://msdn.microsoft.com/library/windows/apps/hh452752)  
-[Connecting to network services (HTML)](http://msdn.microsoft.com/library/windows/apps/hh452977)  
-[How to send and receive network data with a datagram socket (HTML)](http://msdn.microsoft.com/library/windows/apps/hh452986)  
-[How to set network capabilities (HTML)](http://msdn.microsoft.com/library/windows/apps/hh770532)  
-[How to use advanced socket controls (HTML)](http://msdn.microsoft.com/library/windows/apps/hh780596)  
-[Troubleshooting and debugging network connections](http://msdn.microsoft.com/library/windows/apps/hh770534)  
+* [StreamSocket sample](/Samples/StreamSocket)
+* [SocketActivityTrigger StreamSocket Sample](/Samples/SocketActivityStreamSocket)
+* [DatagramSocket sample](/archived/DatagramSocket/) for JavaScript (archived)
 
 ## System requirements
 
-**Client:** Windows 10
-
-**Server:** Windows Server 2016 Technical Preview
-
-**Phone:** Windows 10
+* Windows 10
 
 ## Build the sample
 
 1. If you download the samples ZIP, be sure to unzip the entire archive, not just the folder with the sample you want to build. 
-2. Start Microsoft Visual Studio 2017 and select **File** \> **Open** \> **Project/Solution**.
+2. Start Microsoft Visual Studio and select **File** \> **Open** \> **Project/Solution**.
 3. Starting in the folder where you unzipped the samples, go to the Samples subfolder, then the subfolder for this specific sample, then the subfolder for your preferred language (C++, C#, or JavaScript). Double-click the Visual Studio Solution (.sln) file.
 4. Press Ctrl+Shift+B, or select **Build** \> **Build Solution**.
 

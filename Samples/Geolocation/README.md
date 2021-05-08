@@ -1,3 +1,21 @@
+---
+page_type: sample
+languages:
+- csharp
+- cpp
+- cppcx
+products:
+- windows
+- windows-uwp
+urlFragment: Geolocation
+extendedZipContent:
+- path: SharedContent
+  target: SharedContent
+- path: LICENSE
+  target: LICENSE
+description: "Shows how to get the geographic location of the user's device and track its movements in various ways."
+---
+
 <!---
   category: MapsAndLocation 
   samplefwlink: http://go.microsoft.com/fwlink/p/?LinkId=533278
@@ -5,12 +23,20 @@
 
 # Geolocation sample
 
-Shows how to use the Windows.Devices.Geolocation namespace to get the geographic location of the user's device. 
-An app can use the Geolocation namespace to request access to user location, get the location one time, 
-continuously track the location by getting location update events, or get alerts when the device has entered or exited locations of interest.
+Shows how to use the Windows.Devices.Geolocation namespace to get the geographic location of the user's device
+and track when the location changes in various ways.
+
+After obtaining access to the user's location, an app can
+
+* Retrieve the current location.
+* Receiving events when the location changes.
+* Receiving events when the device has entered or exited locations of interest.
+* Receiving events when the device has spent significant time in a location (a "visit").
 
 > **Note:** This sample is part of a large collection of UWP feature samples. 
-> If you are unfamiliar with Git and GitHub, you can download the entire collection as a 
+> You can download this sample as a standalone ZIP file
+> [from docs.microsoft.com](https://docs.microsoft.com/samples/microsoft/windows-universal-samples/geolocation/),
+> or you can download the entire collection as a single
 > [ZIP file](https://github.com/Microsoft/Windows-universal-samples/archive/master.zip), but be 
 > sure to unzip everything to access shared dependencies. For more info on working with the ZIP file, 
 > the samples collection, and GitHub, see [Get the UWP samples from GitHub](https://aka.ms/ovu2uq). 
@@ -22,10 +48,12 @@ This sample also shows how to:
 - **Handle changes in location permissions**:  Register for the Geolocator's StatusChanged event and use the [StatusChangedEventArgs](http://msdn.microsoft.com/library/windows/apps/br225600) to determine the current position status. 
 - **Get location from a background task** 
 - **Handle geofencing events from a background task** 
+- **Handle geovisit events from a background task** 
 - **Obtain satellite data:** When available, use the [GeocoordinateSatelliteData](http://msdn.microsoft.com/library/windows/apps/jj635260) class to obtain additional information on the quality of the satellite based location data. 
 - **Display a toast:** Notify the user when a geofencing event has occurred in the background. 
 - **Refresh geofence binding:** Refresh the binding on resume and after removal of a geofence. Note that removal requires subscribing to removal events if a geofence is set as single use or a duration is set. 
 - **Request access to the user's location:** Request access to the user's location using the RequestAccessAsync method. Important: call the RequestAccessAsync before accessing the user's location. At that time, your app must be in the foreground and RequestAccessAsync must be called from the UI thread. Until the user grants your app permission to their location, your app can't access location data.  
+- **Track when the user visits a location:** Poll for or receive notifications when the user spends significant time in a location. 
 - **Help the user change location settings:** Link to location privacy settings from your app if the user revokes access to location while your app is in the foreground. Call the LaunchUriAsync method with the URI "ms-settings://privacy/location".
 
 Geofences need to be created in the Foreground Geofencing scenario (Scenario 4) and then you can go to Background Geofencing scenario (Scenario 5) to register for background geofencing events.
@@ -39,28 +67,30 @@ This sample requires that location capability be set in the *Package.appxmanifes
 
 ## Related topics
 
-[Get current location](https://msdn.microsoft.com/library/windows/apps/mt219698)  
-[Windows.Devices.Geolocation](http://msdn.microsoft.com/library/windows/apps/br225603)  
-[Windows.Devices.Geolocation.Geofencing](https://msdn.microsoft.com/library/windows/apps/dn263744)    
-[Guidelines for location-aware apps](https://msdn.microsoft.com/library/windows/apps/hh465148)  
+### Conceptual
 
-## Related samples
+* [Get current location](https://msdn.microsoft.com/library/windows/apps/mt219698)
+* [Guidelines for location-aware apps](https://msdn.microsoft.com/library/windows/apps/hh465148)
 
-[Traffic App sample](https://github.com/microsoft/windows-appsample-trafficapp/)  
-[Lunch Scheduler app sample](https://github.com/Microsoft/Windows-appsample-lunch-scheduler)  
+### Reference
+
+* [Windows.Devices.Geolocation](http://msdn.microsoft.com/library/windows/apps/br225603)
+* [Windows.Devices.Geolocation.Geofencing](https://msdn.microsoft.com/library/windows/apps/dn263744)
+
+### Related samples
+
+* [Traffic App sample](https://github.com/microsoft/windows-appsample-trafficapp/)
+* [Lunch Scheduler app sample](https://github.com/Microsoft/Windows-appsample-lunch-scheduler)
+* [Geolocation sample](/archived/Geolocation/) for JavaScript (archived)
 
 ## System requirements
 
-**Client:** Windows 10
-
-**Server:** Windows Server 2016 Technical Preview
-
-**Phone:** Windows 10
+* Windows 10
 
 ## Build the sample
 
 1. If you download the samples ZIP, be sure to unzip the entire archive, not just the folder with the sample you want to build. 
-2. Start Microsoft Visual Studio 2017 and select **File** \> **Open** \> **Project/Solution**.
+2. Start Microsoft Visual Studio and select **File** \> **Open** \> **Project/Solution**.
 3. Starting in the folder where you unzipped the samples, go to the Samples subfolder, then the subfolder for this specific sample, then the subfolder for your preferred language (C++, C#, or JavaScript). Double-click the Visual Studio Solution (.sln) file.
 4. Press Ctrl+Shift+B, or select **Build** \> **Build Solution**.
 

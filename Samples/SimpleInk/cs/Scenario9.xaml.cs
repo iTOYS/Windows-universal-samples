@@ -47,12 +47,18 @@ namespace SDKTemplate
             this.InitializeComponent();
 
             inkCanvas.InkPresenter.InputDeviceTypes = CoreInputDeviceTypes.Mouse | CoreInputDeviceTypes.Pen | CoreInputDeviceTypes.Touch;
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            // Registering handlers for StrokesCollected event
             inkCanvas.InkPresenter.StrokesCollected += InkPresenter_StrokesCollected;
         }
 
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
             StopReplay();
+            inkCanvas.InkPresenter.StrokesCollected -= InkPresenter_StrokesCollected;
         }
 
         private void InkPresenter_StrokesCollected(InkPresenter sender, InkStrokesCollectedEventArgs e)
@@ -75,7 +81,20 @@ namespace SDKTemplate
         {
             StopReplay();
             inkCanvas.InkPresenter.StrokeContainer.Clear();
+            ClearCanvasStrokeCache();
             rootPage.NotifyUser("Cleared Canvas", NotifyType.StatusMessage);
+        }
+
+        void ClearCanvasStrokeCache()
+        {
+            // Workaround for builds prior to 17650.
+            // Throw away the old inkCanvas and create a new one to avoid accumulation of old strokes.
+            outputGrid.Children.Remove(inkCanvas);
+            inkCanvas = new InkCanvas();
+            outputGrid.Children.Add(inkCanvas);
+            inkCanvas.InkPresenter.InputDeviceTypes = CoreInputDeviceTypes.Mouse | CoreInputDeviceTypes.Pen | CoreInputDeviceTypes.Touch;
+            inkCanvas.InkPresenter.StrokesCollected += InkPresenter_StrokesCollected;
+            HelperFunctions.UpdateCanvasSize(RootGrid, outputGrid, inkCanvas);
         }
 
         private void OnReplay(object sender, RoutedEventArgs e)
@@ -92,6 +111,7 @@ namespace SDKTemplate
 
             ReplayButton.IsEnabled = false;
             inkCanvas.InkPresenter.IsInputEnabled = false;
+            ClearCanvasStrokeCache();
 
             // Calculate the beginning of the earliest stroke and the end of the latest stroke.
             // This establishes the time period during which the strokes were collected.

@@ -1,11 +1,29 @@
-﻿<!---
+---
+page_type: sample
+languages:
+- csharp
+- cpp
+- cppcx
+products:
+- windows
+- windows-uwp
+urlFragment: CustomCapability
+extendedZipContent:
+- path: SharedContent
+  target: SharedContent
+- path: LICENSE
+  target: LICENSE
+description: "Shows the use of custom capabilities."
+---
+
+<!---
   category: PlatformArchitecture
   samplefwlink: http://go.microsoft.com/fwlink/p/?LinkId=846904
 --->
 
 # Custom Capability sample
 
-This sample demonstrates the use of custom capabilities.
+Shows the use of custom capabilities.
 
 Note that the SCCD file included with this sample is not valid,
 but it is included for instructional purposes.
@@ -65,7 +83,7 @@ Before you run this scenario, you must start the corresponding NT service.
 
 * Build the NT service portion of the sample, which requires that the Windows SDK for Desktop C++ Apps be installed.
 * Start the service from an elevated command prompt in one of two ways:
-  * Install it as a service: `rpcserver.exe -install`
+  * Install it as a service using `rpcserver.exe -install` and start it using `sc start hsaservice`.
   * Run the service in console mode: `rpcserver.exe -console`
 
 ## Using a custom capability to access a custom device
@@ -115,22 +133,44 @@ When they are full, the next write operation will wait until a message is read,
 thereby freeing up a message buffer.
 When they are empty, the next read operation will wait until a message is written.
 
-**Note** The Windows universal samples require Visual Studio 2017 to build and Windows 10 to execute.
+## Raising Custom System Event Trigger
+
+Demonstrates how to register background task with the CustomSystemEventTrigger type and
+raise a custom system event when an OSR FX-2 device is connected to a system. The code to
+raise the event is part of the OSR FX-2 driver. This enables custom devices/NT services to raise a custom system event which triggers a background task.
+
+The code for the OSR USB FX-2 driver can be found in the
+[Microsoft Windows-driver-samples repo](https://github.com/Microsoft/Windows-driver-samples/)
+under
+[usb/kmdf_fx2/driver](https://github.com/Microsoft/Windows-driver-samples/tree/master/usb/kmdf_fx2).
+The driver must be built for Windows 10 version 1803 or higher in order to support
+the custom system event trigger used by this sample.
+
+## Firmware access
+
+Declaring the restricted capability `smbios` allows apps to read the SMBIOS.
+Call the
+[GetSystemFirmwareTable](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724379(v=vs.85).aspx)
+and
+[EnumSystemFirmwareTables](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724259(v=vs.85).aspx)
+functions with the 'RSMB' (Raw SMBIOS) table provider.
+
+The following custom capabilities can be used for accessing UEFI variables:
+
+- `microsoft.firmwareRead_cw5n1h2txyewy`: Read UEFI variables using [GetFirmwareEnvironmentVariable](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724325(v=vs.85).aspx)
+- `microsoft.firmwareWrite_cw5n1h2txyewy`: Read/Write UEFI variables using [SetFirmwareEnvironmentVariable](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724934(v=vs.85).aspx)
+
+UEFI access also requires the app to declare 'protectedApp' restricted capability and enable [INTEGRITYCHECK](https://docs.microsoft.com/en-us/cpp/build/reference/integritycheck-require-signature-check) for the project. This would trigger necessary store signing for protected apps during store submission. Currently the [INTEGRITYCHECK](https://docs.microsoft.com/en-us/cpp/build/reference/integritycheck-require-signature-check) can only be enabled on C++ projects properties.
+
+UEFI variables can be accessed only when the app is being used by a user belonging to Administrators group.
+
+**Note** The Windows universal samples require Visual Studio to build and Windows 10 to execute.
  
 To obtain information about Windows 10 development, go to the [Windows Dev Center](http://go.microsoft.com/fwlink/?LinkID=532421)
 
 To obtain information about Microsoft Visual Studio and the tools for developing Windows apps, go to [Visual Studio](http://go.microsoft.com/fwlink/?LinkID=532422)
 
 ## Related topics
-
-### Samples
-
-* [IoT-GPIO](/Samples/IoT-GPIO)
-* [IoT-I2C](/Samples/IoT-I2C)
-* [IoT-SPI](/Samples/IoT-SPI)
-* [Custom HID device access](/Samples/CustomHidDeviceAccess)
-* [Custom serial device access](/Samples/CustomSerialDeviceAccess)
-* [Custom USB device access](/Samples/CustomUsbDeviceAccess)
 
 ### Reference
 
@@ -140,18 +180,25 @@ To obtain information about Microsoft Visual Studio and the tools for developing
 * [How to use RPC callbacks](https://support.microsoft.com/kb/96781)
 * [Custom Capabilities for Universal Windows Platform apps](https://msdn.microsoft.com/windows/hardware/drivers/devapps/custom-capabilities-for-universal-windows-platform-apps)
 * [Hardware access for Universal Windows Platform apps](https://msdn.microsoft.com/windows/hardware/drivers/devapps/hardware-access-for-universal-windows-platform-apps)
+
+### Related samples
+
+* [IoT-GPIO](/Samples/IoT-GPIO)
+* [IoT-I2C](/Samples/IoT-I2C)
+* [IoT-SPI](/Samples/IoT-SPI)
+* [Custom HID device access](/Samples/CustomHidDeviceAccess)
+* [Custom serial device access](/Samples/CustomSerialDeviceAccess)
+* [Custom USB device access](/Samples/CustomUsbDeviceAccess)
+* [CustomCapability sample](/archived/CustomCapability/) for JavaScript (archived)
+
 ## System requirements
 
-**Client:** Windows 10 version 1703
-
-**Server:** Windows Server 2016 Technical Preview
-
-**Phone:** Windows 10 version 1703
+* Windows 10 build 15063 or higher
 
 ## Build the sample
 
 1. If you download the samples ZIP, be sure to unzip the entire archive, not just the folder with the sample you want to build. 
-2. Start Microsoft Visual Studio 2017 and select **File** \> **Open** \> **Project/Solution**.
+2. Start Microsoft Visual Studio and select **File** \> **Open** \> **Project/Solution**.
 3. Starting in the folder where you unzipped the samples, go to the Samples subfolder, then the subfolder for this specific sample, then the subfolder for your preferred language (C++, C#, or JavaScript). Double-click the Visual Studio 2017 Solution (.sln) file.
 4. Press Ctrl+Shift+B, or select **Build** \> **Build Solution**.
 
@@ -167,3 +214,7 @@ The next steps depend on whether you just want to deploy the sample or you want 
 
 - To debug the sample and then run it, press F5 or select Debug >  Start Debugging. To run the sample without debugging, press Ctrl+F5 or select Debug > Start Without Debugging. 
 - To run the "Connect to an NT service" scenario, see additional instructions above.
+
+### Modifying the sample
+
+- If you modify the sample, make sure to [change the interface ID in `RpcInterface.idl`](Service/Interface/RpcInterface.idl#L15), because interface IDs must be unique.

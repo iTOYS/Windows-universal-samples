@@ -1,3 +1,23 @@
+---
+page_type: sample
+languages:
+- csharp
+- cpp
+- cppcx
+- vb
+- cppwinrt
+products:
+- windows
+- windows-uwp
+urlFragment: BarcodeScanner
+extendedZipContent:
+- path: SharedContent
+  target: SharedContent
+- path: LICENSE
+  target: LICENSE
+description: "Shows how to obtain a barcode scanner, claim it for exclusive use, enable it to receive data, and read a barcode."
+---
+
 <!---
   category: DevicesSensorsAndPower
   samplefwlink: http://go.microsoft.com/fwlink/p/?LinkId=620014
@@ -8,7 +28,9 @@
 Shows how to obtain a barcode scanner, claim it for exclusive use, enable it to receive data, and read a barcode.
 
 > **Note:** This sample is part of a large collection of UWP feature samples. 
-> If you are unfamiliar with Git and GitHub, you can download the entire collection as a 
+> You can download this sample as a standalone ZIP file
+> [from docs.microsoft.com](https://docs.microsoft.com/samples/microsoft/windows-universal-samples/barcodescanner/),
+> or you can download the entire collection as a single
 > [ZIP file](https://github.com/Microsoft/Windows-universal-samples/archive/master.zip), but be 
 > sure to unzip everything to access shared dependencies. For more info on working with the ZIP file, 
 > the samples collection, and GitHub, see [Get the UWP samples from GitHub](https://aka.ms/ovu2uq). 
@@ -45,11 +67,18 @@ This sample shows how to:
     and the [SetSymbologyAttributesAsync](https://msdn.microsoft.com/library/windows/apps/windows.devices.pointofservice.claimedbarcodescanner.setsymbologyattributesasync) method
     to enable or disable them.
 
+6. **Control camera-based barcode scanners**
+
+   Detects camera-based barcode scanners by checking the [VideoDeviceId](https://docs.microsoft.com/en-us/uwp/api/windows.devices.pointofservice.barcodescanner.videodeviceid) property
+   and shows an in-app preview of the barcode camera.
+   Shows and hides the video preview window with the [ShowVideoPreviewAsync](https://docs.microsoft.com/en-us/uwp/api/windows.devices.pointofservice.claimedbarcodescanner.showvideopreviewasync)
+   and [HideVideoPreview](https://docs.microsoft.com/en-us/uwp/api/windows.devices.pointofservice.claimedbarcodescanner.hidevideopreview) methods.
+   Controls the software trigger with the [StartSoftwareTriggerAsync](https://docs.microsoft.com/en-us/uwp/api/windows.devices.pointofservice.claimedbarcodescanner.startsoftwaretriggerasync)
+   and [StopSoftwareTrigger](https://docs.microsoft.com/en-us/uwp/api/windows.devices.pointofservice.claimedbarcodescanner.stopsoftwaretriggerasync) methods.
+
 The app package manifest shows how to specify the device capability name for the Point of Service (POS) devices. All POS apps are required declare [DeviceCapability](http://msdn.microsoft.com/library/windows/apps/br211430) in the app package manifest, either by using "PointofService" as shown in this sample or by using a device specific GUID, such as "C243FFBD-3AFC-45E9-B3D3-2BA18BC7EBC5" for a barcode scanner.
 
-For a list of compatible barcode scanners, see [Barcode Scanner Compatible Hardware](https://docs.microsoft.com/windows/uwp/devices-sensors/barcode-scanner#compatible-hardware).
-
-**Note** The Universal Windows app samples require Visual Studio 2017 to build and Windows 10 to execute.
+**Note** The Universal Windows app samples require Visual Studio to build and Windows 10 to execute.
  
 To obtain information about Windows 10 development, go to the [Windows Dev Center](http://go.microsoft.com/fwlink/?LinkID=532421)
 
@@ -60,22 +89,22 @@ To obtain information about Microsoft Visual Studio and the tools for developing
 ### Reference
 
 [Windows.Devices.PointOfService namespace](http://msdn.microsoft.com/library/windows/apps/dn298071)  
-[Barcode Scanner Compatible Hardware](https://docs.microsoft.com/windows/uwp/devices-sensors/barcode-scanner#compatible-hardware)  
+[Supported Point of Service Peripherals](https://docs.microsoft.com/windows/uwp/devices-sensors/pos-device-support)  
 [USB HID POS Scanner specification](http://go.microsoft.com/fwlink/p/?linkid=309230)  
 [Windows app samples](http://go.microsoft.com/fwlink/p/?LinkID=227694)  
 
+### Related samples
+
+* [BarcodeScanner sample](/archived/BarcodeScanner/) for JavaScript (archived)
+
 ## System requirements
 
-**Client:** Windows 10
-
-**Server:** Windows Server 2016 Technical Preview
-
-**Phone:** Windows 10
+* Windows 10
 
 ## Build the sample
 
 1. If you download the samples ZIP, be sure to unzip the entire archive, not just the folder with the sample you want to build. 
-2. Start Microsoft Visual Studio 2017 and select **File** \> **Open** \> **Project/Solution**.
+2. Start Microsoft Visual Studio and select **File** \> **Open** \> **Project/Solution**.
 3. Starting in the folder where you unzipped the samples, go to the Samples subfolder, then the subfolder for this specific sample, then the subfolder for your preferred language (C++, C#, or JavaScript). Double-click the Visual Studio Solution (.sln) file.
 4. Press Ctrl+Shift+B, or select **Build** \> **Build Solution**.
 

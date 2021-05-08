@@ -1,17 +1,37 @@
-﻿<!---
+---
+page_type: sample
+languages:
+- csharp
+- cpp
+- cppcx
+products:
+- windows
+- windows-uwp
+urlFragment: CameraProfile
+extendedZipContent:
+- path: SharedContent
+  target: SharedContent
+- path: LICENSE
+  target: LICENSE
+description: "Shows how to query a media capture device for a collection of media types that can work together on a given device called a Video Profile."
+---
+
+<!---
   category: AudioVideoAndCamera 
   samplefwlink: http://go.microsoft.com/fwlink/p/?LinkId=620518
 --->
 
 # Camera profiles sample
 
-Shows a new extension to Windows.Media.Capture.MediaCaptureInitializationSettings API. This new API lets app 
-developers query a device for a collection of media types that can work together on a given device called a Video Profile. These new Video Profiles 
+Shows how to
+query a media capture device for a collection of media types that can work together on a given device called a Video Profile. These new Video Profiles 
 expose the capabilities of the capture device which the developer can use to set MediaCaptureInitializationSettings to the desired capabilities. In 
 addition, the developer can query the driver to see if it supports additional features available through custom profiles.
 
 > **Note:** This sample is part of a large collection of UWP feature samples. 
-> If you are unfamiliar with Git and GitHub, you can download the entire collection as a 
+> You can download this sample as a standalone ZIP file
+> [from docs.microsoft.com](https://docs.microsoft.com/samples/microsoft/windows-universal-samples/cameraprofile/),
+> or you can download the entire collection as a single
 > [ZIP file](https://github.com/Microsoft/Windows-universal-samples/archive/master.zip), but be 
 > sure to unzip everything to access shared dependencies. For more info on working with the ZIP file, 
 > the samples collection, and GitHub, see [Get the UWP samples from GitHub](https://aka.ms/ovu2uq). 
@@ -40,34 +60,50 @@ Hdr Video.
 1. When you choose "Query Profile for HDR Support" button, the app will query the if the back video capture device supports a Video Profile. Then we query the available profiles
    to see if Hdr Video is supported calling the IsHdrVideoSupported() method. If so, we set Media Capture settings to the Hdr supported video profile and set Hdr Video mode to auto.
 
-Related topics
---------------
-[Windows.Media.Capture.MediaCapture namespace](https://msdn.microsoft.com/library/windows/apps/windows.media.devices.aspx)  
-[Windows.Devices.Enumeration namespace](https://msdn.microsoft.com/library/windows/apps/windows.devices.enumeration.aspx)  
+Note that not all cameras will have camera profiles.
+They are needed only if the camera has combinations of pins or media types which cannot be used simultaneously,
+such as a camera which cannot capture at the highest photo resolution
+while simultaneously streaming at the highest video resolution.
 
-**Conceptual**
+Developers who wish to test their profile logic should target MIPI-based cameras
+that expose multiple pins.
+Example of these cameras are various QC SOC-based devices
+(such as the Lumia 950/950XL and HP Elite X3)
+or Intel MIPI-based systems
+(such as the Surface Pro, Surface Pro 4, Surface Book,
+and Surface Laptop).
+Note that for the Surface Pro 4 and Surface Book 1,
+the latest 4731 camera drivers publish profiles,
+but the factory image drivers do not.
+
+## Related topics
+
+### Conceptual
 
 [How to use Camera Profiles](http://go.microsoft.com/fwlink/?LinkId=627233)  
 
-**Reference**
+### Reference
 
+[Windows.Media.Capture.MediaCapture namespace](https://msdn.microsoft.com/library/windows/apps/windows.media.devices.aspx)  
+[Windows.Devices.Enumeration namespace](https://msdn.microsoft.com/library/windows/apps/windows.devices.enumeration.aspx)  
 [Windows.Media.Capture.MediaCaptureInitializationSettings](https://msdn.microsoft.com/library/windows/apps/windows.media.capture.mediacaptureinitializationsettings.mediacaptureinitializationsettings.aspx)  
 [Windows.Media.Capture.MediaCaptureInitilizationSettings.VideoDeviceId](https://msdn.microsoft.com/library/windows/apps/windows.media.capture.mediacaptureinitializationsettings.videodeviceid.aspx)  
 [Windows.Devices.Enumeration.DeviceInformation class](https://msdn.microsoft.com/library/windows/apps/windows.devices.enumeration.deviceinformation.aspx)  
 
-System requirements
------------------------------
-Camera that supports Video Profiles
+### Related samples
 
-**Client:** Windows 10
+* [CameraProfile sample](/archived/CameraProfile/) for JavaScript (archived)
 
-**Phone:** Windows 10
+### System requirements
+
+* Windows 10
+* Camera that supports Video Profiles
 
 Build the sample
 ----------------
 
 1. If you download the samples ZIP, be sure to unzip the entire archive, not just the folder with the sample you want to build. 
-2. Start Microsoft Visual Studio 2017 and select **File** \> **Open** \> **Project/Solution**.
+2. Start Microsoft Visual Studio and select **File** \> **Open** \> **Project/Solution**.
 3. Starting in the folder where you unzipped the samples, go to the Samples subfolder, then the subfolder for this specific sample, then the subfolder for your preferred language (C++, C#, or JavaScript). Double-click the Visual Studio Solution (.sln) file.
 4. Press Ctrl+Shift+B, or select **Build** \> **Build Solution**.
 

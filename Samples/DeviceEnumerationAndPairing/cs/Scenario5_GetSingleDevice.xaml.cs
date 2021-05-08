@@ -7,40 +7,32 @@ using Windows.Devices.Enumeration;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using SDKTemplate;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace DeviceEnumeration
+namespace SDKTemplate
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class Scenario5 : Page
+    public sealed partial class Scenario5_GetSingleDevice : Page
     {
-        private MainPage rootPage;
+        private MainPage rootPage = MainPage.Current;
         private DeviceInformationKind deviceInformationKind;
 
-        public ObservableCollection<DeviceInformationDisplay> ResultCollection
-        {
-            get;
-            private set;
-        }
+        private ObservableCollection<DeviceInformationDisplay> resultCollection = new ObservableCollection<DeviceInformationDisplay>();
 
-        public Scenario5()
+        public Scenario5_GetSingleDevice()
         {
             this.InitializeComponent();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            rootPage = MainPage.Current;
-            ResultCollection = new ObservableCollection<DeviceInformationDisplay>();
-
-            DataContext = this;
+            resultsListView.ItemsSource = resultCollection;
         }
 
-        private async void InterfaceIdTextBox_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             DeviceInformationCollection deviceInfoCollection;
 
@@ -52,17 +44,18 @@ namespace DeviceEnumeration
                 // use both the DeviceInformation.Kind and the DeviceInformation.Id.
                 interfaceIdTextBox.Text = deviceInfoCollection[0].Id;
                 deviceInformationKind = deviceInfoCollection[0].Kind;
+                InformationKindTextBox.Text = deviceInformationKind.ToString();
+                getButton.IsEnabled = true;
             }
         }
 
         private async void GetButton_Click(object sender, RoutedEventArgs e)
         {
-            string interfaceId = interfaceIdTextBox.Text;
+            resultCollection.Clear();
 
-            interfaceIdTextBox.IsEnabled = false;
+            string interfaceId = interfaceIdTextBox.Text;
             getButton.IsEnabled = false;
-            ResultCollection.Clear();
-            
+
             rootPage.NotifyUser("CreateFromIdAsync operation started...", NotifyType.StatusMessage);
 
             try
@@ -73,7 +66,7 @@ namespace DeviceEnumeration
 
                 rootPage.NotifyUser("CreateFromIdAsync operation completed.", NotifyType.StatusMessage);
 
-                ResultCollection.Add(new DeviceInformationDisplay(deviceInfo));
+                resultCollection.Add(new DeviceInformationDisplay(deviceInfo));
             }
             catch (FileNotFoundException)
             {
@@ -81,8 +74,7 @@ namespace DeviceEnumeration
             }
 
             getButton.IsEnabled = true;
-            getButton.Focus(Windows.UI.Xaml.FocusState.Keyboard);
-            interfaceIdTextBox.IsEnabled = true;
+            getButton.Focus(FocusState.Keyboard);
         }
     }
 }

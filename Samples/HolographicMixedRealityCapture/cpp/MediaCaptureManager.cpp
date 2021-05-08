@@ -5,6 +5,7 @@
 #include <collection.h>
 
 using namespace HolographicMRCSample;
+using namespace Windows::Devices::Enumeration;
 using namespace Windows::Media;
 using namespace Windows::Media::Capture;
 
@@ -32,24 +33,50 @@ Concurrency::task<void> MediaCaptureManager::InitializeAsync(IMFDXGIDeviceManage
         OutputDebugString(args->Message->Data());
     });
 
-    auto initSetting = ref new Windows::Media::Capture::MediaCaptureInitializationSettings;
-    initSetting->StreamingCaptureMode = Windows::Media::Capture::StreamingCaptureMode::AudioAndVideo;
-    initSetting->MediaCategory = Windows::Media::Capture::MediaCategory::Media;
-
     if (pDxgiDeviceManager)
     {
-        // Optionally, you can put your D3D device into MediaCapture.
-        // But, in most case, this is not mandatory.
         m_spMFDXGIDeviceManager = pDxgiDeviceManager;
-        Microsoft::WRL::ComPtr<IAdvancedMediaCaptureInitializationSettings> spAdvancedSettings;
-        ((IUnknown*)initSetting)->QueryInterface(IID_PPV_ARGS(&spAdvancedSettings));
-        spAdvancedSettings->SetDirectxDeviceManager(m_spMFDXGIDeviceManager.Get());
     }
 
-    return Concurrency::create_task(m_mediaCapture->InitializeAsync(initSetting)).then([this]()
+    return Concurrency::create_task(DeviceInformation::FindAllAsync(DeviceClass::VideoCapture)).then([this](DeviceInformationCollection^ devices)
     {
-        auto lock = m_lock.LockExclusive();
-        m_currentState = Initialized;
+        auto initSetting = ref new Windows::Media::Capture::MediaCaptureInitializationSettings;
+        initSetting->StreamingCaptureMode = Windows::Media::Capture::StreamingCaptureMode::AudioAndVideo;
+        initSetting->MediaCategory = Windows::Media::Capture::MediaCategory::Media;
+
+        // Select video conferencing profile since it provides better performance on HoloLens 2
+        for (auto cameraDeviceInfo : devices)
+        {
+            auto profiles = m_mediaCapture->FindKnownVideoProfiles(cameraDeviceInfo->Id, KnownVideoProfile::VideoConferencing);
+            if (profiles->Size > 0)
+            {
+                initSetting->VideoProfile = profiles->GetAt(0);
+            }
+        }
+
+        if (m_spMFDXGIDeviceManager)
+        {
+            // Optionally, you can put your D3D device into MediaCapture.
+            // But, in most case, this is not mandatory.
+            Microsoft::WRL::ComPtr<IAdvancedMediaCaptureInitializationSettings> spAdvancedSettings;
+            ((IUnknown*)initSetting)->QueryInterface(IID_PPV_ARGS(&spAdvancedSettings));
+            spAdvancedSettings->SetDirectxDeviceManager(m_spMFDXGIDeviceManager.Get());
+        }
+
+        return Concurrency::create_task(m_mediaCapture->InitializeAsync(initSetting)).then([this]()
+        {
+            auto lock = m_lock.LockExclusive();
+
+            if (m_mediaCapture->MediaCaptureSettings->AudioDeviceId && m_mediaCapture->MediaCaptureSettings->VideoDeviceId)
+            {
+                // MediaCapture is initialized with valid audio and video device.
+                m_currentState = Initialized;
+            }
+            else
+            {
+                OutputDebugString(L"MediaCapture is initialized without valid sources.\n");
+            }
+        });
     });
 }
 
@@ -295,13 +322,20 @@ bool MediaCaptureManager::CanTakePhoto()
 
     if (m_currentState == Initialized)
     {
-        OutputDebugString(L"Can Take Photo\n");
         ret = true;
     }
-    else
+
+    return ret;
+}
+
+bool MediaCaptureManager::CanToggleVideo()
+{
+    auto lock = m_lock.LockShared();
+    bool ret = false;
+
+    if (m_currentState == Initialized || m_currentState == Recording)
     {
-        OutputDebugString(L"Can NOT Take Photo\n");
-        ret = false;
+        ret = true;
     }
 
     return ret;

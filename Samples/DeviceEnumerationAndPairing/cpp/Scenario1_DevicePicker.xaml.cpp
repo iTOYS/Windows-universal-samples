@@ -21,45 +21,39 @@ using namespace Windows::Devices::Enumeration;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
-Scenario1::Scenario1() : rootPage(MainPage::Current)
+Scenario1_DevicePicker::Scenario1_DevicePicker()
 {
     InitializeComponent();
 }
 
-void Scenario1::OnNavigatedTo(NavigationEventArgs^ e)
+void Scenario1_DevicePicker::OnNavigatedTo(NavigationEventArgs^ e)
 {
-    ResultCollection = ref new Vector<DeviceInformationDisplay^>();
+    resultsListView->ItemsSource = resultCollection;
 
     selectorComboBox->ItemsSource = DeviceSelectorChoices::DevicePickerSelectors;
     selectorComboBox->SelectedIndex = 0;
-
-    DataContext = this;
 }
 
-void Scenario1::OnNavigatedFrom(NavigationEventArgs^ e)
-{
-}
-
-void Scenario1::PickSingleDeviceButton_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+void Scenario1_DevicePicker::PickSingleDeviceButton_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
     ShowDevicePicker(
         true // pickSingle
         );
 }
 
-void Scenario1::ShowDevicePickerButton_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+void Scenario1_DevicePicker::ShowDevicePickerButton_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
     ShowDevicePicker(
         false // pickSingle
         );
 }
 
-void Scenario1::ShowDevicePicker(bool pickSingle)
+void Scenario1_DevicePicker::ShowDevicePicker(bool pickSingle)
 {
     showDevicePickerButton->IsEnabled = false;
-    ResultCollection->Clear();
+    resultCollection->Clear();
 
-    devicePicker = ref new DevicePicker();
+    DevicePicker^ devicePicker = ref new DevicePicker();
     
     // First get the device selector chosen by the UI.
     DeviceSelectorInfo^ deviceSelectorInfo = safe_cast<DeviceSelectorInfo^>(selectorComboBox->SelectedItem);
@@ -89,7 +83,7 @@ void Scenario1::ShowDevicePicker(bool pickSingle)
         {
             if (nullptr != deviceInfo)
             {
-                ResultCollection->Append(ref new DeviceInformationDisplay(deviceInfo));
+                resultCollection->Append(ref new DeviceInformationDisplay(deviceInfo));
             }
             showDevicePickerButton->IsEnabled = true;
         }, concurrency::task_continuation_context::use_current());
@@ -116,11 +110,10 @@ void Scenario1::ShowDevicePicker(bool pickSingle)
             rootPage->Dispatcher->RunAsync(CoreDispatcherPriority::Low, ref new DispatchedHandler(
                 [this, eventArgs]()
             {
-                ResultCollection->Clear();
-                ResultCollection->Append(ref new DeviceInformationDisplay(eventArgs->SelectedDevice));
+                resultCollection->Clear();
+                resultCollection->Append(ref new DeviceInformationDisplay(eventArgs->SelectedDevice));
             }));
         });
-
         devicePicker->Show(rect);
     }
 }

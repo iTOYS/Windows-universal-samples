@@ -1,4 +1,23 @@
-﻿<!---
+---
+page_type: sample
+languages:
+- csharp
+- cpp
+- cppcx
+- vb
+products:
+- windows
+- windows-uwp
+urlFragment: CameraStarterKit
+extendedZipContent:
+- path: SharedContent
+  target: SharedContent
+- path: LICENSE
+  target: LICENSE
+description: "An end-to-end sample camera application."
+---
+
+<!---
   category: AudioVideoAndCamera
   samplefwlink: http://go.microsoft.com/fwlink/p/?LinkId=619479
 --->
@@ -9,7 +28,9 @@ Provides an end-to-end sample to show how to write a camera application using th
 conjunction with orientation sensors to cover the functions that most camera apps will require.
 
 > **Note:** This sample is part of a large collection of UWP feature samples.
-> If you are unfamiliar with Git and GitHub, you can download the entire collection as a
+> You can download this sample as a standalone ZIP file
+> [from docs.microsoft.com](https://docs.microsoft.com/samples/microsoft/windows-universal-samples/camerastarterkit/),
+> or you can download the entire collection as a single
 > [ZIP file](https://github.com/Microsoft/Windows-universal-samples/archive/master.zip), but be
 > sure to unzip everything to access shared dependencies. For more info on working with the ZIP file,
 > the samples collection, and GitHub, see [Get the UWP samples from GitHub](https://aka.ms/ovu2uq).
@@ -32,13 +53,13 @@ For apps that are interested in capturing a photo or video without requiring acc
 
 ## Related topics
 
-**Conceptual**
+### Conceptual
 
 [Capture photos and video with MediaCapture](http://go.microsoft.com/fwlink/?LinkId=627234)  
 [Capture photos and video with CameraCaptureUI](https://msdn.microsoft.com/library/windows/apps/mt282142)  
 [Media capture using capture device](https://code.msdn.microsoft.com/windowsapps/Media-Capture-Sample-adf87622)  
 
-**Reference**
+### Reference
 
 [Windows.Media.Capture.MediaCapture namespace](https://msdn.microsoft.com/library/windows/apps/windows.media.devices.aspx)  
 [Windows.Media.Capture.MediaCaptureInitializationSettings constructor](https://msdn.microsoft.com/library/windows/apps/windows.media.capture.mediacaptureinitializationsettings.mediacaptureinitializationsettings.aspx)  
@@ -52,24 +73,20 @@ For apps that are interested in capturing a photo or video without requiring acc
 [Windows.Graphics.Imaging.BitmapDecoder class](https://msdn.microsoft.com/library/windows/apps/windows.graphics.imaging.bitmapdecoder.aspx)  
 [Windows.Graphics.Imaging.BitmapEncoder class](https://msdn.microsoft.com/library/windows/apps/windows.graphics.imaging.bitmapencoder.aspx)  
 
-## Related samples
+### Related samples
 
-[Family Notes sample](https://github.com/Microsoft/Windows-appsample-familynotes)  
+* [Family Notes sample](https://github.com/Microsoft/Windows-appsample-familynotes)
+* [CameraStarterKit sample](/archived/CameraStarterKit/) for JavaScript (archived)
 
 ## System requirements
 
-**Hardware:** Camera
-
-**Client:** Windows 10
-
-**Server:** Windows Server 2016 Technical Preview
-
-**Phone:** Windows 10
+* Windows 10
+* Camera
 
 ## Build the sample
 
 1. If you download the samples ZIP, be sure to unzip the entire archive, not just the folder with the sample you want to build.
-2. Start Microsoft Visual Studio 2017 and select **File** \> **Open** \> **Project/Solution**.
+2. Start Microsoft Visual Studio and select **File** \> **Open** \> **Project/Solution**.
 3. Starting in the folder where you unzipped the samples, go to the Samples subfolder, then the subfolder for this specific sample, then the subfolder for your preferred language (C++, C#, or JavaScript). Double-click the Visual Studio Solution (.sln) file.
 4. Press Ctrl+Shift+B, or select **Build** \> **Build Solution**.
 

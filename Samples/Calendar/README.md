@@ -1,3 +1,23 @@
+---
+page_type: sample
+languages:
+- csharp
+- cpp
+- cppcx
+- cppwinrt
+- vb
+products:
+- windows
+- windows-uwp
+urlFragment: Calendar
+extendedZipContent:
+- path: SharedContent
+  target: SharedContent
+- path: LICENSE
+  target: LICENSE
+description: "Shows how to use the Calendar class to manipulate and process dates based on a calendar system and the user's globalization preferences."
+---
+
 <!--
   category: GlobalizationAndLocalization
   samplefwlink: http://go.microsoft.com/fwlink/p/?LinkId=624043
@@ -11,7 +31,9 @@ namespace to manipulate and process dates based on a calendar system and the use
 (If you are looking for a sample which demonstrates an appointment calendar, see the [Appointments](../Appointments) sample.)
 
 > **Note:** This sample is part of a large collection of UWP feature samples. 
-> If you are unfamiliar with Git and GitHub, you can download the entire collection as a 
+> You can download this sample as a standalone ZIP file
+> [from docs.microsoft.com](https://docs.microsoft.com/samples/microsoft/windows-universal-samples/calendar/),
+> or you can download the entire collection as a single
 > [ZIP file](https://github.com/Microsoft/Windows-universal-samples/archive/master.zip), but be 
 > sure to unzip everything to access shared dependencies. For more info on working with the ZIP file, 
 > the samples collection, and GitHub, see [Get the UWP samples from GitHub](https://aka.ms/ovu2uq). 
@@ -52,30 +74,27 @@ This scenario also demonstrates converting from a language-specific date type to
 
 ## Related topics
 
-### Samples
-
-[DateTimeFormatting sample](../DateTimeFormatting)  
-[GlobalizationPreferences sample](../GlobalizationPreferences)  
-[NumberFormatting sample](../NumberFormatting)  
-
 ### Reference
 
 [Windows.Globalization.Calendar](http://msdn.microsoft.com/library/windows/apps/br206724)  
 [Windows.Globalization.CalendarIdentifiers](http://msdn.microsoft.com/library/windows/apps/br229460)  
 [Windows.Globalization.ClockIdentifiers](http://msdn.microsoft.com/library/windows/apps/br229462)  
 
+### Related samples
+
+* [DateTimeFormatting sample](../DateTimeFormatting)
+* [GlobalizationPreferences sample](../GlobalizationPreferences)
+* [NumberFormatting sample](../NumberFormatting)
+* [Calendar sample](/archived/Calendar/) for JavaScript (archived)
+
 ## System requirements
 
-**Client:** Windows 10
-
-**Server:** Windows Server 2016 Technical Preview
-
-**Phone:** Windows 10
+* Windows 10
 
 ## Build the sample
 
 1. If you download the samples ZIP, be sure to unzip the entire archive, not just the folder with the sample you want to build. 
-2. Start Microsoft Visual Studio 2017 and select **File** \> **Open** \> **Project/Solution**.
+2. Start Microsoft Visual Studio and select **File** \> **Open** \> **Project/Solution**.
 3. Starting in the folder where you unzipped the samples, go to the Samples subfolder, then the subfolder for this specific sample, then the subfolder for your preferred language (C++, C#, or JavaScript). Double-click the Visual Studio Solution (.sln) file.
 4. Press Ctrl+Shift+B, or select **Build** \> **Build Solution**.
 

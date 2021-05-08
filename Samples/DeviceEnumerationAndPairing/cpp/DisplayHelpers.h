@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft. All rights reserved.
 
 #pragma once
-#include "mainpage.xaml.h"
-#include "Objbase.h"
 
 namespace SDKTemplate
 {
@@ -127,6 +125,11 @@ namespace SDKTemplate
         }
 
         static property DeviceSelectorInfo^ Upnp
+        {
+            DeviceSelectorInfo^ get();
+        }
+
+        static property DeviceSelectorInfo^ NetworkCamera
         {
             DeviceSelectorInfo^ get();
         }
@@ -270,6 +273,11 @@ namespace SDKTemplate
         }
 
         void Update(Windows::Devices::Enumeration::DeviceInformationUpdate^ deviceInfoUpdateIn);
+
+        Platform::String^ GetPropertyForDisplay(Platform::String^ key)
+        {
+            return Properties->HasKey(key) ? Properties->Lookup(key)->ToString() : nullptr;
+        }
 
         virtual event Windows::UI::Xaml::Data::PropertyChangedEventHandler^ PropertyChanged;
 

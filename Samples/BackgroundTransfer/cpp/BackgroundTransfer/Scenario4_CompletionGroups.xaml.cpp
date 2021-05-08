@@ -12,7 +12,7 @@
 #include "pch.h"
 #include "Scenario4_CompletionGroups.xaml.h"
 
-using namespace BackgroundTransfer;
+using namespace SDKTemplate;
 
 using namespace Concurrency;
 using namespace Platform;
@@ -108,9 +108,11 @@ void Scenario4_CompletionGroups::StartDownloadsButton_Click(Object^ sender, Rout
             return;
         }
 
-        task<StorageFile^> createFileTask = create_task(KnownFolders::PicturesLibrary->CreateFileAsync(
-            "picture.png",
-            CreationCollisionOption::GenerateUniqueName));
+        task<StorageFile^> createFileTask = create_task(KnownFolders::GetFolderForUserAsync(nullptr /* current user */, KnownFolderId::PicturesLibrary))
+            .then([](StorageFolder^ picturesLibrary)
+        {
+            return picturesLibrary->CreateFileAsync("picture.png", CreationCollisionOption::GenerateUniqueName);
+        });
 
         task<void> postCreateFileTask = createFileTask.then([this, downloader, source](task<StorageFile^> createFileTask)
         {

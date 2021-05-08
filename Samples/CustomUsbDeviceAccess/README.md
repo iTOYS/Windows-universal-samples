@@ -1,3 +1,19 @@
+---
+page_type: sample
+languages:
+- csharp
+products:
+- windows
+- windows-uwp
+urlFragment: CustomUsbDeviceAccess
+extendedZipContent:
+- path: SharedContent
+  target: SharedContent
+- path: LICENSE
+  target: LICENSE
+description: "Shows how to communicate with a USB device by using the Windows.Devices.Usb namespace."
+---
+
 <!---
   category: DevicesSensorsAndPower
   samplefwlink: http://go.microsoft.com/fwlink/p/?LinkId=620530
@@ -8,7 +24,9 @@
 Shows how to communicate with a USB device by using the [Windows.Devices.Usb](http://msdn.microsoft.com/library/windows/apps/dn278466) namespace. 
 
 > **Note:** This sample is part of a large collection of UWP feature samples. 
-> If you are unfamiliar with Git and GitHub, you can download the entire collection as a 
+> You can download this sample as a standalone ZIP file
+> [from docs.microsoft.com](https://docs.microsoft.com/samples/microsoft/windows-universal-samples/customusbdeviceaccess/),
+> or you can download the entire collection as a single
 > [ZIP file](https://github.com/Microsoft/Windows-universal-samples/archive/master.zip), but be 
 > sure to unzip everything to access shared dependencies. For more info on working with the ZIP file, 
 > the samples collection, and GitHub, see [Get the UWP samples from GitHub](https://aka.ms/ovu2uq). 
@@ -29,7 +47,7 @@ The sample demonstrates these key scenarios:
 -   [How to select a USB interface setting](http://msdn.microsoft.com/library/windows/apps/dn303345)
 -   How to handle app suspension and resume events
 
-For step-by-step instructions about implementing USB features in a Windows Store app, see [Talking to USB devices, start to finish](http://msdn.microsoft.com/library/windows/apps/dn312121) and [Writing a Windows store app for a USB device](http://msdn.microsoft.com/library/windows/apps/dn303355).
+For step-by-step instructions about implementing USB features in a Windows Runtime app, see [Talking to USB devices, start to finish](http://msdn.microsoft.com/library/windows/apps/dn312121) and [Writing a Windows store app for a USB device](http://msdn.microsoft.com/library/windows/apps/dn303355).
 
 ## Code Structure
 
@@ -118,7 +136,9 @@ The sample adds the [DeviceCapability](http://msdn.microsoft.com/library/windows
   </Capabilities>
 ```
 
-## Related technologies
+## Related topics
+
+### References
 
 * [Windows.Devices.Usb](http://msdn.microsoft.com/library/windows/apps/dn278466)
 
@@ -144,11 +164,13 @@ The sample adds the [DeviceCapability](http://msdn.microsoft.com/library/windows
 
   Writes data to an output stream. Used for writing data to a USB pipe.
 
-## Operating system requirements
+### Related samples
 
-**Client:** Windows 10
+* [CustomUsbDeviceAccess sample](/archived/CustomUsbDeviceAccess/) for JavaScript (archived)
 
-**Server:** Windows Server 2016 Technical Preview
+## System requirements
+
+* Windows 10
 
 ## Driver requirements
 
@@ -210,7 +232,7 @@ You can extend this sample for your device by performing these tasks.
 ## Build the sample
 
 1. If you download the samples ZIP, be sure to unzip the entire archive, not just the folder with the sample you want to build. 
-2. Start Microsoft Visual Studio 2017 and select **File** \> **Open** \> **Project/Solution**.
+2. Start Microsoft Visual Studio and select **File** \> **Open** \> **Project/Solution**.
 3. Starting in the folder where you unzipped the samples, go to the Samples subfolder, then the subfolder for this specific sample, then the subfolder for your preferred language (C++, C#, or JavaScript). Double-click the Visual Studio Solution (.sln) file.
 4. Press Ctrl+Shift+B, or select **Build** \> **Build Solution**.
 

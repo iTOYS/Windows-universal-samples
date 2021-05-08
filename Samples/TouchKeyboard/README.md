@@ -1,3 +1,21 @@
+---
+page_type: sample
+languages:
+- csharp
+- cpp
+- cppwinrt
+products:
+- windows
+- windows-uwp
+urlFragment: TouchKeyboard
+extendedZipContent:
+- path: SharedContent
+  target: SharedContent
+- path: LICENSE
+  target: LICENSE
+description: "Shows both the default display behavior of the touch keyboard and how that behavior can be customized in a UWP app."
+---
+
 <!---
   category: CustomUserInteractions Touch
   samplefwlink: http://go.microsoft.com/fwlink/p/?LinkId=627612
@@ -5,10 +23,12 @@
 
 # Touch keyboard sample
 
-Shows how apps can influence whether the touch keyboard displays when the user taps on a control with the pen or touch.
+Shows both the default display behavior of the touch keyboard and how that behavior can be customized in a UWP app.
 
 > **Note:** This sample is part of a large collection of UWP feature samples. 
-> If you are unfamiliar with Git and GitHub, you can download the entire collection as a 
+> You can download this sample as a standalone ZIP file
+> [from docs.microsoft.com](https://docs.microsoft.com/samples/microsoft/windows-universal-samples/touchkeyboard/),
+> or you can download the entire collection as a single
 > [ZIP file](https://github.com/Microsoft/Windows-universal-samples/archive/master.zip), but be 
 > sure to unzip everything to access shared dependencies. For more info on working with the ZIP file, 
 > the samples collection, and GitHub, see [Get the UWP samples from GitHub](https://aka.ms/ovu2uq). 
@@ -16,20 +36,18 @@ Shows how apps can influence whether the touch keyboard displays when the user t
 
 Specifically, this sample shows how:
 
-* Standard XAML text controls (such as TextBox, RichTextBox, and PaswordBox) display the touch keyboard by default.
-* Controls derived from standard XAML text controls display the touch keyboard by default.
-* Other controls do not display the touch keyboard by default.
-* On the PC, you can request that the touch keyboard display for a custom control
-  by implementing the TextPattern provider interface ([ITextProvider](http://msdn.microsoft.com/library/windows/apps/br242627))
-  and the ValuePattern provider interface ([IValueProvider](http://msdn.microsoft.com/library/windows/apps/br242663)).
-  Not supported on Phone.
-* You can request that the touch keyboard not display when focus is programmatically placed on a control.
+* XAML text controls (such as TextBox, RichTextBox, and PaswordBox) display the touch keyboard by default.
+* Controls derived from XAML text controls display the touch keyboard by default.
+* Apps can subscribe to events indicating when the touch keyboard is shown and hidden.
+* Apps can request that the touch keyboard be shown or hidden.
+* Apps can request that the touch keyboard be shown with a particular view.
 
-**Note** In Windows 10,
-the touch keyboard will not display automatically if a hardware keyboard is connected,
-or the PC is in Desktop mode and "Automatically show the touch keyboard in windowed apps when there is no keyboard attached to your device" in Settings -> Devices -> Typing is disabled.
+**Note** The touch keyboard does not automatically display if a hardware keyboard is connected,
+or the device is in Desktop mode and "Show the touch keyboard when not in tablet mode and there's no keyboard attached" is set to "Off" in **Settings -> Devices -> Typing**.
 
-**Note** The Windows universal samples require Visual Studio 2017 to build and Windows 10 to execute.
+**Note** The Windows universal samples require Visual Studio to build and Windows 10 to execute.
+
+**Note** <a href="../CustomEditControl">Custom text edit control sample</a> shows how to manage the visibility of the touch keyboard programatically.
  
 To obtain information about Windows 10, go to [Windows 10](http://go.microsoft.com/fwlink/?LinkID=532421)
 
@@ -41,11 +59,9 @@ To obtain information about Microsoft Visual Studio and the tools for developing
 
 **Server:** Windows Server 2016 Technical Preview
 
-**Phone:** Windows 10. (KeyboardEnabledTextBox not supported; see remarks above.)
-
 ## Build the sample
 
-1. Start Microsoft Visual Studio 2017 and select **File** \> **Open** \> **Project/Solution**.
+1. Start Microsoft Visual Studio and select **File** \> **Open** \> **Project/Solution**.
 2. Go to the directory to which you unzipped the sample. Then go to the subdirectory containing the sample in the language you desire - either C++, C#, or JavaScript. Double-click the Visual Studio Solution (.sln) file. 
 3. Press Ctrl+Shift+B, or select **Build** \> **Build Solution**. 
 

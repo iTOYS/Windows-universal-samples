@@ -128,17 +128,41 @@ namespace SDKTemplate
         return ref new DeviceSelectorInfo("UPnP", DeviceClass::All, "System.Devices.Aep.ProtocolId:=\"{0e261de4-12f0-46e6-91ba-428607ccef64}\"", DeviceInformationKind::AssociationEndpoint);
     }
 
+    DeviceSelectorInfo^ DeviceSelectorChoices::NetworkCamera::get()
+    {
+        return ref new DeviceSelectorInfo("Web Services on Devices (NetworkCamera)", DeviceClass::All, "System.Devices.Aep.ProtocolId:=\"{43cc0de4-8ca8-4a56-805a-86fc63f21602}\"", DeviceInformationKind::AssociationEndpoint);
+    }
+
+    void AddVideoCastingIfSupported(Vector<DeviceSelectorInfo^>^ selectors)
+    {
+        try
+        {
+            selectors->Append(DeviceSelectorChoices::VideoCasting);
+        }
+        catch (Exception^ ex)
+        {
+            if (ex->HResult == HRESULT_FROM_WIN32(ERROR_NOT_SUPPORTED))
+            {
+                // Video casting not supported by the system.
+            }
+            else
+            {
+                throw;
+            }
+        }
+    }
 
     IVectorView<DeviceSelectorInfo^>^ DeviceSelectorChoices::DevicePickerSelectors::get()
     {
-        Vector<DeviceSelectorInfo^>^ selectors = ref new Vector<DeviceSelectorInfo^>(begin(CommonDeviceSelectors), end(CommonDeviceSelectors));
+        auto commonDeviceSelectors = CommonDeviceSelectors;
+        Vector<DeviceSelectorInfo^>^ selectors = ref new Vector<DeviceSelectorInfo^>(begin(commonDeviceSelectors), end(commonDeviceSelectors));
         selectors->Append(BluetoothPairedOnly);
         selectors->Append(BluetoothUnpairedOnly);
         selectors->Append(BluetoothLEPairedOnly);
         selectors->Append(BluetoothLEUnpairedOnly);
         selectors->Append(WiFiDirect);
         selectors->Append(PointOfServicePrinter);
-        selectors->Append(VideoCasting);
+        AddVideoCastingIfSupported(selectors);
         selectors->Append(DialAllApps);
 
         return selectors->GetView();
@@ -146,7 +170,8 @@ namespace SDKTemplate
 
     IVectorView<DeviceSelectorInfo^>^ DeviceSelectorChoices::FindAllAsyncSelectors::get()
     {
-        Vector<DeviceSelectorInfo^>^ selectors = ref new Vector<DeviceSelectorInfo^>(begin(CommonDeviceSelectors), end(CommonDeviceSelectors));
+        auto commonDeviceSelectors = CommonDeviceSelectors;
+        Vector<DeviceSelectorInfo^>^ selectors = ref new Vector<DeviceSelectorInfo^>(begin(commonDeviceSelectors), end(commonDeviceSelectors));
         selectors->Append(BluetoothPairedOnly);
         selectors->Append(BluetoothLEPairedOnly);
         selectors->Append(WiFiDirectPairedOnly);
@@ -156,12 +181,13 @@ namespace SDKTemplate
 
     IVectorView<DeviceSelectorInfo^>^ DeviceSelectorChoices::DeviceWatcherSelectors::get()
     {
-        Vector<DeviceSelectorInfo^>^ selectors = ref new Vector<DeviceSelectorInfo^>(begin(CommonDeviceSelectors), end(CommonDeviceSelectors));
+        auto commonDeviceSelectors = CommonDeviceSelectors;
+        Vector<DeviceSelectorInfo^>^ selectors = ref new Vector<DeviceSelectorInfo^>(begin(commonDeviceSelectors), end(commonDeviceSelectors));
         selectors->Append(Bluetooth);
         selectors->Append(BluetoothLE);
         selectors->Append(WiFiDirect);
         selectors->Append(PointOfServicePrinter);
-        selectors->Append(VideoCasting);
+        AddVideoCastingIfSupported(selectors);
         selectors->Append(DialAllApps);
         selectors->Append(Wsd);
         selectors->Append(Upnp);
@@ -171,12 +197,13 @@ namespace SDKTemplate
 
     IVectorView<DeviceSelectorInfo^>^ DeviceSelectorChoices::BackgroundDeviceWatcherSelectors::get()
     {
-        Vector<DeviceSelectorInfo^>^ selectors = ref new Vector<DeviceSelectorInfo^>(begin(CommonDeviceSelectors), end(CommonDeviceSelectors));
+        auto commonDeviceSelectors = CommonDeviceSelectors;
+        Vector<DeviceSelectorInfo^>^ selectors = ref new Vector<DeviceSelectorInfo^>(begin(commonDeviceSelectors), end(commonDeviceSelectors));
         selectors->Append(BluetoothPairedOnly);
         selectors->Append(BluetoothLEPairedOnly);
         selectors->Append(WiFiDirectPairedOnly);
         selectors->Append(PointOfServicePrinter);
-        selectors->Append(VideoCasting);
+        AddVideoCastingIfSupported(selectors);
         selectors->Append(DialAllApps);
         selectors->Append(Wsd);
         selectors->Append(Upnp);
@@ -191,9 +218,10 @@ namespace SDKTemplate
         selectors->Append(BluetoothLE);
         selectors->Append(WiFiDirect);
         selectors->Append(PointOfServicePrinter);
-        selectors->Append(VideoCasting);
+        AddVideoCastingIfSupported(selectors);
         selectors->Append(Wsd);
         selectors->Append(Upnp);
+        selectors->Append(NetworkCamera);
 
         return selectors->GetView();
     }
@@ -303,6 +331,7 @@ namespace SDKTemplate
         OnPropertyChanged("DeviceInformation");
         OnPropertyChanged("CanPair");
         OnPropertyChanged("IsPaired");
+        OnPropertyChanged("GetPropertyForDisplay");
 
         UpdateGlyphBitmapImage();
     }
